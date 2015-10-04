@@ -6,6 +6,8 @@
   "scripts": {
     "test": "npm run model-tests",
     "model-tests": "coffeetape spec/models/**.coffee",
+    "integration-tests": "node ./spec/integration.js",
+    "preintegration-tests": "selenium-standalone start &",
     "mock-server": "canned -p 32837 ../json-roa-mock-server/data/",
     "dev": "webpack-dev-server",
     "watch": "webpack --progress --colors --watch",
@@ -56,9 +58,11 @@
     "html-webpack-template": "2.5.1",
     "less": "2.5.3",
     "less-loader": "2.2.1",
+    "selenium-standalone": "4.7.0",
     "tap-spec": "4.1.0",
     "tape": "4.2.1",
     "typopro-web": "3.4.0",
+    "webdriverio": "3.2.4",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.12.0"
   }
