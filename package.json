@@ -6,8 +6,8 @@
   "scripts": {
     "test": "npm run model-tests",
     "model-tests": "coffeetape spec/models/**.coffee",
-    "integration-tests": "node ./spec/integration.js",
-    "preintegration-tests": "selenium-standalone start &",
+    "integration-tests": "coffee ./spec/integration.coffee",
+    "xpreintegration-tests": "selenium-standalone install && selenium-standalone start & sleep 5 &",
     "mock-server": "canned -p 32837 ../json-roa-mock-server/data/",
     "dev": "webpack-dev-server",
     "watch": "webpack --progress --colors --watch",
