@@ -19,56 +19,55 @@ jobs:
         #   - cider-ci/defaults/traits.yml
         #   - cider-ci/defaults/ports.yml
         #   - cider-ci/defaults/scripts.yml
-        traits:
-          bash: true
-          curl: true
-          git: true
-          leiningen: true
-          linux: true
-          maven: true
-          maven3: true
-          openjdk: true
-          postgresql: true
-          nodejs: true
-
-        git-options:
-          submodules:
-            clone: True
-            timeout: 60
-
-        max-auto-trials: 1
-
-        ports:
-          XVNC_PORT:
-            inet_address: "localhost"
-            min: 5900
-            max: 5999
-          API_HTTP_PORT:
-            inet_address: "localhost"
-            min: 8100
-            max: 8799
-          CI_SELENIUM_PORT:
-            inet_address: "localhost"
-            min: 9900
-            max: 9999
-
-        environment-variables:
-          # NODE_ENV: production
-          API_SERVICE_PATH: "./spec/demo-app"
-          DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
-          PGUSER: cider-ci_exec-user
-          PGPASSWORD: cider-ci_exec-user
-
-          API_ROOT_URL: "http://localhost:{{API_HTTP_PORT}}/"
-          # heroku-like vars for demo-api:
-          PORT: "{{API_HTTP_PORT}}"
-          DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
-
-        scripts:
 
       tasks:
         integration:
           name: 'Integration Tests'
+
+          traits:
+            bash: true
+            curl: true
+            git: true
+            leiningen: true
+            linux: true
+            maven: true
+            maven3: true
+            openjdk: true
+            postgresql: true
+            nodejs: true
+
+          git-options:
+            submodules:
+              clone: True
+              timeout: 60
+
+          max-auto-trials: 1
+
+          ports:
+            XVNC_PORT:
+              inet_address: "localhost"
+              min: 5900
+              max: 5999
+            API_HTTP_PORT:
+              inet_address: "localhost"
+              min: 8100
+              max: 8799
+            CI_SELENIUM_PORT:
+              inet_address: "localhost"
+              min: 9900
+              max: 9999
+
+          environment-variables:
+            # NODE_ENV: production
+            API_SERVICE_PATH: "./spec/demo-app"
+            DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
+            PGUSER: cider-ci_exec-user
+            PGPASSWORD: cider-ci_exec-user
+
+            API_ROOT_URL: "http://localhost:{{API_HTTP_PORT}}/"
+            # heroku-like vars for demo-api:
+            PORT: "{{API_HTTP_PORT}}"
+            DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
 
           scripts:
             create-database:
