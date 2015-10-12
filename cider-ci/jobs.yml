@@ -13,17 +13,119 @@ jobs:
         timeout: 120
 
       task-defaults:
-        _cider-ci_include:
-          - cider-ci/defaults/misc.yml
-          - cider-ci/defaults/attachments.yml
-          - cider-ci/defaults/traits.yml
-          - cider-ci/defaults/ports.yml
-          - cider-ci/defaults/scripts.yml
+        # _cider-ci_include:
+        #   - cider-ci/defaults/misc.yml
+        #   - cider-ci/defaults/attachments.yml
+        #   - cider-ci/defaults/traits.yml
+        #   - cider-ci/defaults/ports.yml
+        #   - cider-ci/defaults/scripts.yml
+        traits:
+          bash: true
+          curl: true
+          git: true
+          leiningen: true
+          linux: true
+          maven: true
+          maven3: true
+          openjdk: true
+          postgresql: true
+          nodejs: true
+
+        git-options:
+          submodules:
+            clone: True
+            timeout: 60
+
+        max-auto-trials: 1
+
+        ports:
+          XVNC_PORT:
+            inet_address: "localhost"
+            min: 5900
+            max: 5999
+          API_HTTP_PORT:
+            inet_address: "localhost"
+            min: 8100
+            max: 8799
+          CI_SELENIUM_PORT:
+            inet_address: "localhost"
+            min: 9900
+            max: 9999
+
+        environment-variables:
+          # NODE_ENV: production
+          API_SERVICE_PATH: "./spec/demo-app"
+          DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
+          PGUSER: cider-ci_exec-user
+          PGPASSWORD: cider-ci_exec-user
+
+          API_ROOT_URL: "http://localhost:{{API_HTTP_PORT}}/"
+          # heroku-like vars for demo-api:
+          PORT: "{{API_HTTP_PORT}}"
+          DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
+
+        scripts:
 
       tasks:
         integration:
           name: 'Integration Tests'
+
           scripts:
+            create-database:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                createdb ${DB_NAME}
+                cat ./spec/demo-app/setup.sql | psql -d ${DB_NAME}
+
+            start-vnc:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                tightvncserver "${DISPLAY}"  -geometry 1024x768 -rfbport "$XVNC_PORT"  -interface '0.0.0.0'
+
+            npm-install:
+              body: 'npm install'
+
+            run-api:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                cd "$API_SERVICE_PATH"
+                lein trampoline run
+              ignore-state: true # we don't care about the exit status
+              start-when:
+                - script: create-database
+              terminate-when:
+                - script: shutdown
+                  states: [aborted, passed, failed, skipped]
+
+            api-is-running:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                until curl --silent --fail -I "${API_ROOT_URL}";  do
+                  sleep 1;
+                done
+              start-when:
+                - script: run-api
+                  states: [executing]
+
+            run-selenium:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                npm run selenium-standalone -- install
+                npm run selenium-standalone -- start --port ${CI_SELENIUM_PORT}
+              ignore-state: true # we don't care about the exit status
+              start-when:
+                - script: npm-install
+                - script: start-vnc
+              terminate-when:
+                - script: shutdown
+                  states: [aborted, passed, failed, skipped]
+
+
             test:
               name: 'Browser Integration Tests'
               body: |
@@ -33,3 +135,35 @@ jobs:
               - script: api-is-running
               - script: run-selenium
                 states: [executing]
+
+            shutdown:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                # kill -INT $(lsof -t -wni tcp:${UI_HTTP_PORT})
+                sleep 5
+              start-when:
+                - script: test
+                  states: [aborted, passed, failed, skipped]
+
+            delete-database:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                dropdb ${DB_NAME}
+              ignore-state: true
+              ignore-abort: true
+              start-when:
+                - script: shutdown
+                  states: [aborted, passed, failed, skipped]
+
+            stop-vnc:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                tightvncserver -kill "${DISPLAY}" -clean
+              ignore-abort: true
+              ignore-state: true
+              start-when:
+                - script: shutdown
+                  states: [aborted, passed, failed, skipped]
