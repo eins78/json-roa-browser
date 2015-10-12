@@ -118,7 +118,7 @@ jobs:
                 #!/usr/bin/env bash
                 set -eux
                 npm run selenium-standalone -- install
-                npm run selenium-standalone -- start --port ${CI_SELENIUM_PORT}
+                npm run -s selenium-standalone -- start -- -port "${CI_SELENIUM_PORT}"
               ignore-state: true # we don't care about the exit status
               start-when:
                 - script: npm_install
