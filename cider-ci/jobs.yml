@@ -83,6 +83,9 @@ jobs:
                 set -eux
                 tightvncserver "${DISPLAY}"  -geometry 1024x768 -rfbport "$XVNC_PORT"  -interface '0.0.0.0'
 
+            npm-install:
+              body: 'npm install'
+
             run-api:
               body: |
                 #!/usr/bin/env bash
@@ -111,11 +114,11 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -eux
-                npm install
                 npm run selenium-standalone -- install
                 npm run selenium-standalone -- start --port ${CI_SELENIUM_PORT}
               ignore-state: true # we don't care about the exit status
               start-when:
+                - script: npm-install
                 - script: start-vnc
               terminate-when:
                 - script: shutdown
@@ -126,8 +129,6 @@ jobs:
               name: 'Browser Integration Tests'
               body: |
                 #!/usr/bin/env bash
-                set -eux
-                npm install
                 npm run -s integration-tests
               start-when:
               - script: api-is-running
