@@ -48,63 +48,17 @@ jobs:
               inet_address: "localhost"
               min: 5900
               max: 5999
-            API_HTTP_PORT:
-              inet_address: "localhost"
-              min: 8100
-              max: 8799
             CI_SELENIUM_PORT:
               inet_address: "localhost"
               min: 9900
               max: 9999
 
-          environment-variables:
-            # NODE_ENV: production
-            API_SERVICE_PATH: "./spec/demo-app"
-            DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
-            PGUSER: cider-ci_exec-user
-            PGPASSWORD: cider-ci_exec-user
-
-            API_ROOT_URL: "http://localhost:{{API_HTTP_PORT}}/"
-            # heroku-like vars for demo-api:
-            PORT: "{{API_HTTP_PORT}}"
-            DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
-
           scripts:
-            create-database:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                createdb ${DB_NAME}
-                cat ./spec/demo-app/setup.sql | psql -d ${DB_NAME}
-
-            run-api:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                cd "$API_SERVICE_PATH"
-                lein trampoline run
-              ignore-state: true # we don't care about the exit status
-              start-when:
-                - script: create-database
-
-            api-is-running:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                until curl --silent --fail -I "${API_ROOT_URL}";  do
-                  sleep 1;
-                done
-              start-when:
-                - script: run-api
-                  states: [executing]
-
             start-vnc:
               body: |
                 #!/usr/bin/env bash
                 set -eux
                 tightvncserver "${DISPLAY}"  -geometry 1024x768 -rfbport "$XVNC_PORT"  -interface '0.0.0.0'
-              start-when:
-                - script: api-is-running
 
             npm_install:
               body: |
