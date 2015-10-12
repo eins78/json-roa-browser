@@ -1,0 +1,17 @@
+create-database:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    createdb ${DB_NAME}
+    cat ./spec/demo-app/setup.sql | psql -d ${DB_NAME}
+
+delete-database:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    dropdb ${DB_NAME}
+  ignore-state: true
+  ignore-abort: true
+  start-when:
+  - script: create-database
+    states: [aborted, passed, failed, skipped]

@@ -1,0 +1,13 @@
+ports:
+  XVNC_PORT:
+    inet_address: "localhost"
+    min: 5900
+    max: 5999
+  API_HTTP_PORT:
+    inet_address: "localhost"
+    min: 8100
+    max: 8799
+  UI_HTTP_PORT:
+    inet_address: "localhost"
+    min: 8100
+    max: 8799

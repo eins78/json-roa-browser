@@ -1,0 +1,97 @@
+jobs:
+  Integration-Tests:
+    description: |
+      This job must be run from the master project Cider-CI!
+
+    run-on:
+    - type: branch
+      include-match: ^.*$
+
+    context:
+
+      script-defaults:
+        environment-variables_process-templates: true
+        environment-variables:
+          DISPLAY: ":{{XVNC_PORT}}"
+        timeout: 300
+
+      task-defaults:
+
+        _cider-ci_include:
+          - cider-ci/defaults/misc.yml
+          - cider-ci/defaults/attachments.yml
+          - cider-ci/defaults/traits.yml
+          - cider-ci/defaults/ports.yml
+          - cider-ci/defaults/scripts.yml
+
+      tasks:
+        hello:
+          body: true
+
+      # _cider-ci_generate-tasks:
+      #   include-match: spec/.*_spec.rb
+
+# jobs:
+#   'Tests':
+#
+#     run-on:
+#     - type: branch
+#       include-match: ^.*$
+#
+#     context:
+#
+#       task-defaults:
+#         max-auto-trials: 1
+#         traits:
+#           nodejs: true
+#         trial-attachments:
+#           logs:
+#             glob: spec/log*.txt
+#             content-type: text/plain
+#           logs_html:
+#             glob: spec/log*.html
+#             content-type: text/html
+#         ports:
+#           CI_XVNC_PORT:
+#             inet_address: "localhost"
+#             min: 5000
+#             max: 5999
+#           CI_SELENIUM_PORT:
+#             inet_address: "localhost"
+#             min: 4444
+#             max: 4499
+#         scripts:
+#           'npm_install':
+#             body: 'npm install'
+#           'build_web':
+#             body: 'npm run build'
+#             start-when:
+#             - script: 'npm_install'
+#           'start_selenium':
+#             body: 'selenium-standalone start install && xvfb-run --server-args="-screen 0, 1366x768x24" selenium-standalone start selenium-standalone start -- -port $\\CI_SELENIUM_PORT'
+#           'format_tap':
+#             body: 'cat spec/log.txt | npm run -s tap-spec -- --color | npm run -s coffee spec/_format-summary.coffee > spec/log.html'
+#             start-when:
+#             - script: 'tap-test'
+#
+#
+#       tasks:
+#         unit:
+#           name: 'Unit Tests'
+#           scripts:
+#             'tap-test':
+#               name: 'Model Tests'
+#               body: 'npm -s run model-tests | tee spec/log.txt'
+#               start-when:
+#               - script: 'npm_install'
+#
+#         integration:
+#           name: 'Integration Tests'
+#           scripts:
+#             'test':
+#               name: 'Browser Integration Tests'
+#               body: 'npm -s run integration-tests'
+#               start-when:
+#               - script: 'build_web'
+#               - script: 'start_api'
+#               - script: 'start_selenium'

@@ -1,0 +1,3 @@
+[submodule "spec/demo-app"]
+	path = spec/demo-app
+	url = https://github.com/json-roa/json-roa_demo-app
