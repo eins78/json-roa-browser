@@ -4,6 +4,7 @@ run-api:
     set -eux
     cd "$API_SERVICE_PATH"
     lein trampoline run
+  ignore-state: true # we don't care about the exit status
   start-when:
   - script: create-database
   terminate-when:
