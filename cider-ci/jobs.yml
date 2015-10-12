@@ -77,15 +77,6 @@ jobs:
                 createdb ${DB_NAME}
                 cat ./spec/demo-app/setup.sql | psql -d ${DB_NAME}
 
-            start-vnc:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                tightvncserver "${DISPLAY}"  -geometry 1024x768 -rfbport "$XVNC_PORT"  -interface '0.0.0.0'
-
-            npm-install:
-              body: 'npm install'
-
             run-api:
               body: |
                 #!/usr/bin/env bash
@@ -110,6 +101,19 @@ jobs:
                 - script: run-api
                   states: [executing]
 
+            start-vnc:
+              body: |
+                #!/usr/bin/env bash
+                set -eux
+                tightvncserver "${DISPLAY}"  -geometry 1024x768 -rfbport "$XVNC_PORT"  -interface '0.0.0.0'
+              start-when:
+                - script: api-is-running
+
+            npm-install:
+              body: 'npm install'
+              start-when:
+                - script: start-vnc
+
             run-selenium:
               body: |
                 #!/usr/bin/env bash
@@ -119,11 +123,9 @@ jobs:
               ignore-state: true # we don't care about the exit status
               start-when:
                 - script: npm-install
-                - script: start-vnc
               terminate-when:
                 - script: shutdown
                   states: [aborted, passed, failed, skipped]
-
 
             test:
               name: 'Browser Integration Tests'
@@ -131,7 +133,6 @@ jobs:
                 #!/usr/bin/env bash
                 npm run -s integration-tests
               start-when:
-              - script: api-is-running
               - script: run-selenium
                 states: [executing]
 
