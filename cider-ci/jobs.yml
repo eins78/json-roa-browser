@@ -107,7 +107,9 @@ jobs:
                 - script: api-is-running
 
             npm_install:
-              body: 'npm install'
+              body: |
+                #!/usr/bin/env bash
+                npm install --no-spin && sleep 1
               start-when:
                 - script: start-vnc
 
