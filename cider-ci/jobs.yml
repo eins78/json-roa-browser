@@ -32,3 +32,19 @@ jobs:
               - script: api-is-running
               - script: run-selenium
                 states: [executing]
+
+  Tests:
+    name: All Tests
+    descriptions: 'All Tests that need to pass before merging.'
+    depends-on:
+    - type: job
+      job: Integration-Tests
+      states: [passed]
+    run-on:
+    - type: branch
+      include-match: ^.+$
+    context:
+      tasks:
+        all:
+          scripts:
+            body: true
