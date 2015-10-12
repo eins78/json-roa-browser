@@ -31,9 +31,7 @@ run-selenium:
   ignore-state: true # we don't care about the exit status
   start-when:
     - script: npm-install
-      states: [passed]
     - script: start-vnc
-      states: [executing]
   terminate-when:
     - script: shutdown
       states: [aborted, passed, failed, skipped]
