@@ -12,12 +12,10 @@ run-api:
     states: [aborted, passed, failed, skipped]
 
 api-is-running:
-  environment-variables:
-    STATUS_URL: http://localhost:{{API_HTTP_PORT}}/
   body: |
     #!/usr/bin/env bash
     set -eux
-    until curl --silent --fail -I "${STATUS_URL}";  do
+    until curl --silent --fail -I "${API_ROOT_URL}";  do
       sleep 1;
     done
   start-when:
