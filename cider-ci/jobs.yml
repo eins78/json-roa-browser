@@ -86,9 +86,6 @@ jobs:
               ignore-state: true # we don't care about the exit status
               start-when:
                 - script: create-database
-              terminate-when:
-                - script: shutdown
-                  states: [aborted, passed, failed, skipped]
 
             api-is-running:
               body: |
@@ -123,9 +120,6 @@ jobs:
               ignore-state: true # we don't care about the exit status
               start-when:
                 - script: npm_install
-              terminate-when:
-                - script: shutdown
-                  states: [aborted, passed, failed, skipped]
 
             test:
               name: 'Browser Integration Tests'
@@ -135,35 +129,3 @@ jobs:
               start-when:
               - script: run-selenium
                 states: [executing]
-
-            shutdown:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                # kill -INT $(lsof -t -wni tcp:${UI_HTTP_PORT})
-                sleep 5
-              start-when:
-                - script: test
-                  states: [aborted, passed, failed, skipped]
-
-            delete-database:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                dropdb ${DB_NAME}
-              ignore-state: true
-              ignore-abort: true
-              start-when:
-                - script: shutdown
-                  states: [aborted, passed, failed, skipped]
-
-            stop-vnc:
-              body: |
-                #!/usr/bin/env bash
-                set -eux
-                tightvncserver -kill "${DISPLAY}" -clean
-              ignore-abort: true
-              ignore-state: true
-              start-when:
-                - script: shutdown
-                  states: [aborted, passed, failed, skipped]
