@@ -11,3 +11,7 @@ ports:
     inet_address: "localhost"
     min: 8100
     max: 8799
+  CI_SELENIUM_PORT:
+    inet_address: "localhost"
+    min: 9900
+    max: 9999

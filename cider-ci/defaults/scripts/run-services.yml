@@ -23,3 +23,13 @@ api-is-running:
   start-when:
   - script: run-api
     states: [executing]
+
+run-selenium:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    npm run selenium-standalone install
+    npm run selenium-standalone start -- --port ${CI_SELENIUM_PORT}
+  terminate-when:
+  - script: shutdown
+    states: [aborted, passed, failed, skipped]

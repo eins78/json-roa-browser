@@ -8,4 +8,5 @@ integration-tests:
   start-when:
   - script: start-vnc
   - script: api-is-running
-  # - script: npm-install
+  - script: run-selenium
+    states: [executing]
