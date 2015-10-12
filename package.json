@@ -15,7 +15,8 @@
     "build": "webpack --optimize-minimize --progress --colors",
     "deploy-178": "npm run build && rsync -avPh --delete build/*.* mt:domains/dev.178.is/html/json-roa-browser/",
     "tap-spec": "tap-spec",
-    "coffee": "coffee"
+    "coffee": "coffee",
+    "selenium-standalone": "selenium-standalone"
   },
   "authors": [
     "Thomas Schank <DrTom@schank.ch>",
