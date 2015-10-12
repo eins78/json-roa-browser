@@ -27,10 +27,10 @@ run-selenium:
     #!/usr/bin/env bash
     set -eux
     npm run selenium-standalone -- install
-    npm run selenium-standalone -- start --port ${CI_SELENIUM_PORT}
+    npm run selenium-standalone -- start -- -port ${CI_SELENIUM_PORT}
   ignore-state: true # we don't care about the exit status
   start-when:
-    - script: npm-install
+    - script: dependencies_installed
     - script: start-vnc
   terminate-when:
     - script: shutdown
