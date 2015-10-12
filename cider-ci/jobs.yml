@@ -67,6 +67,11 @@ jobs:
               start-when:
                 - script: start-vnc
 
+            npm_was_installed:
+              body: 'echo "npm ok. selenium port is $CI_SELENIUM_PORT"'
+              start-when:
+                - script: npm_install
+
             run-selenium:
               body: |
                 #!/usr/bin/env bash
@@ -75,7 +80,7 @@ jobs:
                 npm run -s selenium-standalone -- start -- -port "${CI_SELENIUM_PORT}"
               ignore-state: true # we don't care about the exit status
               start-when:
-                - script: npm_install
+                - script: npm_was_installed
 
             test:
               name: 'Browser Integration Tests'
