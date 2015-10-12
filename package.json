@@ -62,7 +62,6 @@
     "selenium-standalone": "4.7.0",
     "tap-spec": "4.1.0",
     "tape": "4.2.1",
-    "typopro-web": "3.4.0",
     "webdriverio": "3.2.4",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.12.0"
