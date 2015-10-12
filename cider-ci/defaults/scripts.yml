@@ -1,7 +1,13 @@
 scripts:
+  test:
+    body: sleep 5
+    start-when:
+    - script: api-is-running
+    - script: run-selenium
+      states: [executing]
   _cider-ci_include:
-    - 'cider-ci/defaults/scripts/npm-install.yml'
     - 'cider-ci/defaults/scripts/manage-database.yml'
     - 'cider-ci/defaults/scripts/manage-xvnc.yml'
+    - 'cider-ci/defaults/scripts/npm-install.yml'
     - 'cider-ci/defaults/scripts/run-services.yml'
     - 'cider-ci/defaults/scripts/shutdown-and-cleanup.yml'

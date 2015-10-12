@@ -29,10 +29,6 @@ jobs:
               body: |
                 #!/bin/bash
                 npm run -s integration-tests
-              start-when:
-                - script: api-is-running
-                - script: run-selenium
-                  states: [executing]
 
         # TODO:
         # unit:
