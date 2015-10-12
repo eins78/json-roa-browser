@@ -1,0 +1,11 @@
+### shutdown & cleanup ####################################
+
+shutdown:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    # kill -INT $(lsof -t -wni tcp:${UI_HTTP_PORT})
+    sleep 5
+  start-when:
+    - script: test
+      states: [aborted, passed, failed, skipped]
