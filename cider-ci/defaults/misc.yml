@@ -6,7 +6,7 @@ git-options:
 max-auto-trials: 1
 
 environment-variables:
-  NODE_ENV: production
+  # NODE_ENV: production
   API_SERVICE_PATH: "./spec/demo-app"
   DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
   PGUSER: cider-ci_exec-user
