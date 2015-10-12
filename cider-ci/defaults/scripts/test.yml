@@ -1,14 +1,5 @@
 ### test ##################################################
 
-# the demo repo must not reference objects
-repack-demo-repo:
-  body: cd demo-project-bash && git repack -a
-
-
-bundle:
-  exclusive-executor-resource: bundler
-  body: cd integration-tests && bundle
-
 integration-tests:
   body: |
     #!/usr/bin/env bash
