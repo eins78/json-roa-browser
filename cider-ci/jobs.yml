@@ -109,7 +109,7 @@ jobs:
               start-when:
                 - script: api-is-running
 
-            npm-install:
+            npm_install:
               body: 'npm install'
               start-when:
                 - script: start-vnc
@@ -122,7 +122,7 @@ jobs:
                 npm run selenium-standalone -- start --port ${CI_SELENIUM_PORT}
               ignore-state: true # we don't care about the exit status
               start-when:
-                - script: npm-install
+                - script: npm_install
               terminate-when:
                 - script: shutdown
                   states: [aborted, passed, failed, skipped]
