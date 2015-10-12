@@ -1,0 +1,37 @@
+run-api:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    cd "$API_SERVICE_PATH"
+    lein trampoline run
+  ignore-state: true # we don't care about the exit status
+  start-when:
+    - script: create-database
+  terminate-when:
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]
+
+api-is-running:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    until curl --silent --fail -I "${API_ROOT_URL}";  do
+      sleep 1;
+    done
+  start-when:
+    - script: run-api
+      states: [executing]
+
+run-selenium:
+  body: |
+    #!/usr/bin/env bash
+    set -eux
+    npm run selenium-standalone -- install
+    npm run selenium-standalone -- start -- -port ${CI_SELENIUM_PORT}
+  ignore-state: true # we don't care about the exit status
+  start-when:
+    - script: dependencies_installed
+    - script: start-vnc
+  terminate-when:
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]

@@ -1,0 +1,7 @@
+dependencies_installed:
+  body: 'true'
+  start-when:
+    - script: npm-install
+
+npm-install:
+  body: 'npm install'

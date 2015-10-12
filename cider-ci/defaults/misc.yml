@@ -1,0 +1,18 @@
+git-options:
+  submodules:
+    clone: True
+    timeout: 60
+
+max-auto-trials: 1
+
+environment-variables:
+  # NODE_ENV: production
+  API_SERVICE_PATH: "./spec/demo-app"
+  DB_NAME: "json-roa-demo_{{CIDER_CI_TRIAL_ID}}"
+  PGUSER: cider-ci_exec-user
+  PGPASSWORD: cider-ci_exec-user
+
+  API_ROOT_URL: "http://localhost:{{API_HTTP_PORT}}/"
+  # heroku-like vars for demo-api:
+  PORT: "{{API_HTTP_PORT}}"
+  DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"

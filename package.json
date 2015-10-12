@@ -6,13 +6,15 @@
   "scripts": {
     "test": "npm run model-tests",
     "model-tests": "coffeetape spec/models/**.coffee",
+    "integration-tests": "coffee ./spec/integration.coffee",
     "dev": "webpack-dev-server",
     "watch": "webpack --progress --colors --watch",
     "prebuild": "rm -rf build && mkdir build",
     "build": "webpack --optimize-minimize --progress --colors",
     "deploy-178": "npm run build && rsync -avPh --delete build/*.* mt:domains/dev.178.is/html/json-roa-browser/",
     "tap-spec": "tap-spec",
-    "coffee": "coffee"
+    "coffee": "coffee",
+    "selenium-standalone": "selenium-standalone"
   },
   "authors": [
     "Thomas Schank <DrTom@schank.ch>",
@@ -55,11 +57,13 @@
     "html-webpack-template": "2.5.1",
     "less": "2.5.3",
     "less-loader": "2.2.1",
+    "selenium-standalone": "4.7.0",
     "style-loader": "0.12.4",
     "tap-spec": "4.1.0",
     "tape": "4.2.1",
     "typopro-web": "3.4.0",
     "url-loader": "0.5.6",
+    "webdriverio": "3.2.4",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.12.0"
   }
