@@ -24,19 +24,12 @@ jobs:
         integration:
           name: 'Integration Tests'
           scripts:
-            'test':
+            test:
               name: 'Browser Integration Tests'
               body: |
                 #!/bin/bash
                 npm run -s integration-tests
-
-        # TODO:
-        # unit:
-        #   name: 'Unit Tests'
-        #   scripts:
-        #     'tap-test':
-        #       name: 'Model Tests'
-        #       body: 'npm run -s model-tests | tee spec/log.txt'
-        #       start-when:
-        #       - script: 'npm-install'
-        #
+              start-when:
+              - script: api-is-running
+              - script: run-selenium
+                states: [executing]
