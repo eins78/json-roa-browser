@@ -1,6 +1,5 @@
 ### shutdown & cleanup ####################################
 
-# the shutdown-delay is meant for debugging
 shutdown:
   body: |
     #!/usr/bin/env bash
@@ -8,5 +7,5 @@ shutdown:
     # kill -INT $(lsof -t -wni tcp:${UI_HTTP_PORT})
     sleep 5
   start-when:
-    - script: integration-tests
+    - script: test
       states: [aborted, passed, failed, skipped]
