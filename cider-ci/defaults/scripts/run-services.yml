@@ -1,6 +1,4 @@
 run-api:
-  environment-variables:
-    SERVICE_DIRECTORY: api
   body: |
     #!/usr/bin/env bash
     set -eux
@@ -12,7 +10,7 @@ run-api:
   - script: shutdown
     states: [aborted, passed, failed, skipped]
 
-api-is-running: 
+api-is-running:
   environment-variables:
     STATUS_URL: http://localhost:{{API_HTTP_PORT}}/
   body: |

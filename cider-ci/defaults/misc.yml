@@ -12,3 +12,6 @@ environment-variables:
   DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
   PGUSER: cider-ci_exec-user
   PGPASSWORD: cider-ci_exec-user
+
+  PORT: {{API_HTTP_PORT}} # for demo-app
+  STATUS_URL: http://localhost:{{API_HTTP_PORT}}/
