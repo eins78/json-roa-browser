@@ -12,5 +12,5 @@ stop-vnc:
   ignore-abort: true
   ignore-state: true
   start-when:
-  - script: shutdown
-    states: [aborted, passed, failed, skipped]
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]

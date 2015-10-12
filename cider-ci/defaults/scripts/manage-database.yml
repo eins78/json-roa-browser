@@ -13,5 +13,5 @@ delete-database:
   ignore-state: true
   ignore-abort: true
   start-when:
-  - script: shutdown
-    states: [aborted, passed, failed, skipped]
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]

@@ -1,4 +1,7 @@
 trial-attachments:
   logs:
-    glob: '{.,**}/*.log'
+    glob: spec/log*.txt
     content-type: text/plain
+  logs_html:
+    glob: spec/log*.html
+    content-type: text/html

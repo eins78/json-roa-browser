@@ -6,10 +6,10 @@ run-api:
     lein trampoline run
   ignore-state: true # we don't care about the exit status
   start-when:
-  - script: create-database
+    - script: create-database
   terminate-when:
-  - script: shutdown
-    states: [aborted, passed, failed, skipped]
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]
 
 api-is-running:
   body: |
@@ -19,8 +19,8 @@ api-is-running:
       sleep 1;
     done
   start-when:
-  - script: run-api
-    states: [executing]
+    - script: run-api
+      states: [executing]
 
 run-selenium:
   body: |
@@ -28,6 +28,9 @@ run-selenium:
     set -eux
     npm run selenium-standalone install
     npm run selenium-standalone start -- --port ${CI_SELENIUM_PORT}
+  ignore-state: true # we don't care about the exit status
+  start-when:
+    - script: npm-install
   terminate-when:
-  - script: shutdown
-    states: [aborted, passed, failed, skipped]
+    - script: shutdown
+      states: [aborted, passed, failed, skipped]
