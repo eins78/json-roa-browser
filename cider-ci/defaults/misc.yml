@@ -9,6 +9,6 @@ environment-variables:
   NODE_ENV: production
 
   DB_NAME: json-roa-demo_{{CIDER_CI_TRIAL_ID}}
-  DATABASE_URL: "jdbc:postgresql://localhost:5432/{{DB_NAME}}?user={{PGUSER}}&password={{PGPASSWORD}}"
+  DATABASE_URL: "jdbc:postgresql://localhost:5432/json-roa-demo_{{CIDER_CI_TRIAL_ID}}?user={{PGUSER}}&password={{PGPASSWORD}}"
   PGUSER: cider-ci_exec-user
   PGPASSWORD: cider-ci_exec-user

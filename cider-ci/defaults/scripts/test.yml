@@ -9,20 +9,12 @@ bundle:
   exclusive-executor-resource: bundler
   body: cd integration-tests && bundle
 
-test:
+integration-tests:
   body: |
     #!/usr/bin/env bash
     set -eux
-    cd integration-tests
-    bundle exec rspec $CIDER_CI_TASK_FILE
+    sleep 5 && true
   start-when:
-  - script: repack-demo-repo
   - script: start-vnc
-  - script: bundle
-  - script: executor-is-running
   - script: api-is-running
-  - script: builder-is-running
-  - script: dispatcher-is-running
-  - script: repository-is-running
-  - script: storage-is-running
-  - script: ui-is-running
+  # - script: npm-install
