@@ -1,5 +1,6 @@
 app = require('ampersand-app')
-React = require('react')
+React = require('react') # used indirectly (via JSX)
+ReactDOM = require('react-dom')
 urlQuery = require('qs')
 hashchange = require('hashchange')
 
@@ -26,13 +27,17 @@ app.extend
     hashchange.update(@onHashChange)
 
     # init react view (auto-refreshes on model changes):
-    React.render(<AppView app={app}/>, document.body)
+    ReactDOM.render(<AppView app={app}/>, document.getElementById('app'))
 
     # run the initial request on startup
     do @browser.runRequest
 
 # attach to browser console for development
 window.app = app
+
+# NOTE: React warns against directly redendering into document.body
+#       - create the app container `document.getElementById('app')`
+document.body.innerHTML = '<div id="app"></div>'
 
 # kickoff
 do app.init
