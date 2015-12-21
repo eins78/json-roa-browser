@@ -57,7 +57,7 @@ module.exports = React.createClass
             onClear={@onClear}
             onConfigChange={@onRequestConfigChange}/>
 
-          {# ROA Result: Error or RoaObject #}
+          {# ROA Result: Error or RoaObject or nothing #}
           {switch
             when (roaObject = browser.response?.roaObject)?
               <RoaObject roaObject={roaObject} onMethodSubmit={@onMethodSubmit}/>
