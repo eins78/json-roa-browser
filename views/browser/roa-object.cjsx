@@ -30,9 +30,9 @@ module.exports = React.createClass
       </div>
 
       <ListGroup>
-        <RoaSelfRelation selfRelation={roa.get('self-relation')} url={roa.url}/>
-        <RoaCollection collection={roa.get('collection')} url={roa.url}/>
-        <RoaRelations relations={roa.get('relations')} url={roa.url}/>
+        <RoaSelfRelation selfRelation={roa.get('roaSelfRelation')} url={roa.url}/>
+        <RoaCollection collection={roa.get('roaCollection')} url={roa.url}/>
+        <RoaRelations relations={roa.get('roaRelations')} url={roa.url}/>
       </ListGroup>
 
     </div>
@@ -49,11 +49,11 @@ RoaSelfRelation = React.createClass
 RoaCollection = React.createClass
   render: ()->
     collection = @props.collection
-    return null unless collection?.relations.length > 1
+    return null unless collection?.roaRelations.length > 1
 
     <ListGroupItem header='Collection'>
       [next link]
-      <RoaRelationList url={@props.url} relations={collection.relations}/>
+      <RoaRelationList url={@props.url} relations={collection.roaRelations}/>
     </ListGroupItem>
 
 RoaRelations = React.createClass
@@ -101,7 +101,7 @@ RoaRelationListItem = React.createClass
         {relation.title}</td>
       <td className='meta-relations col-sm-4'>
         <ul className='list-inline list-unstyled'>
-          {relation.relations.map (metaRel)->
+          {relation.roaRelations.map (metaRel)->
             <li key={metaRel.getId()}>
               <a href={libUrl.resolve(url, metaRel.href)}>
                 <Icon icon='link fa-rotate-90'/>{metaRel.title}</a></li>

@@ -7,7 +7,7 @@ module.exports = Model.extend
   # > "The collection object must contain a relations key which contains
   #    as described in the section relations object."
   collections:
-    relations: RoaRelations
+    roaRelations: RoaRelations
   # > "The collection can contain a next key with the value of a relation object
   #   with the following restriction: the included url may not be templated."
   children:

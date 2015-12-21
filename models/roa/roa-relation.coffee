@@ -8,4 +8,4 @@ module.exports = RoaRelationBase.extend
   type: 'RoaRelation'
 
   collections:
-    relations: RoaMetaRelations
+    roaRelations: RoaMetaRelations

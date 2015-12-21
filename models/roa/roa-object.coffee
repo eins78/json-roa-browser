@@ -10,7 +10,7 @@ RoaCollection = require('./roa-collection')
 module.exports = Model.extend mixinTypeSemver,
   type: 'RoaObject'
 
-  parse: (givenData)-> parseRoaTree(givenData)
+  parse: parseRoaTree # more friendly: keynames; arrays for preserving order
 
   props:
     # > "A minimal valid JSON-ROA extension must contain the key version
@@ -24,10 +24,10 @@ module.exports = Model.extend mixinTypeSemver,
 
   # TODO: dont init when empty
   children:
-    'self-relation': RoaRelation
-    collection: RoaCollection
+    roaSelfRelation: RoaRelation
+    roaCollection: RoaCollection
 
   collections:
-    relations: RoaRelations
+    roaRelations: RoaRelations
 
   extraProperties: 'reject'

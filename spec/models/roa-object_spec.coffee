@@ -20,26 +20,26 @@ test 'roa model ', (t)->
 
     t.test 'self-relation', (t)->
       t.plan(4)
-      sr = roa['self-relation']
+      sr = roa.roaSelfRelation
       t.equal(sr.type, 'RoaRelation', 'is a RoaRelation')
       t.equal(sr.name, 'Messages', 'has correct name')
-      t.equal(sr.relations.length, 1, 'has 1 meta-relation')
-      t.equal(sr.relations.models[0].type, 'RoaMetaRelation',
+      t.equal(sr.roaRelations.length, 1, 'has 1 meta-relation')
+      t.equal(sr.roaRelations.models[0].type, 'RoaMetaRelation',
         'first meta-relation is a RoaMetaRelation')
 
     t.test 'collection', (t)->
       t.plan(4)
-      col = roa.collection
+      col = roa.roaCollection
       t.ok(col.isState, 'is state')
       t.equal(col.next.type, 'RoaRelation', 'next is a RoaRelation')
-      t.equal(col.relations.length, 3, 'has 3 relations')
+      t.equal(col.roaRelations.length, 3, 'has 3 relations')
       t.test 'first item', (t)->
         t.plan(2)
-        item = col.relations.models[0]
+        item = col.roaRelations.models[0]
         t.equal(item.keyName, '1', 'has correct keyName')
         t.test 'meta-relations', (t)->
           t.plan(3)
-          mrel = item.relations
+          mrel = item.roaRelations
           t.equal(mrel.length, 1, 'has 1 meta-relation')
           t.equal(mrel.models[0].type, 'RoaMetaRelation',
             'first meta-relation is a RoaMetaRelation')
@@ -49,7 +49,7 @@ test 'roa model ', (t)->
 
     t.test 'relations', (t)->
       t.plan(5)
-      rel = roa.relations
+      rel = roa.roaRelations
 
       t.ok(rel.isCollection, 'is collection')
       t.equal(rel.length, 3, 'has 3 relations')
@@ -70,7 +70,7 @@ test 'roa model ', (t)->
 
         t.test 'meta-relations', (t)->
           t.plan(3)
-          mrel = rootrel.relations
+          mrel = rootrel.roaRelations
           t.equal(mrel.length, 1, 'has 1 meta-relation')
           t.equal(mrel.models[0].type, 'RoaMetaRelation',
             'first meta-relation is a RoaMetaRelation')

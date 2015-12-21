@@ -18,8 +18,6 @@ Good to know when reading the code:
 
 ### TODO
 
-- rename `RoaObject.collection` to `RoaObject.roaCollection`
-  (https://github.com/AmpersandJS/ampersand-state/commit/ab899efec34c739cbaa393228003c1f0f515fd16)
 - RoaRelation methods:
     - build dynamic form from needed data
     - support templated urls
