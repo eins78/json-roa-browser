@@ -19,6 +19,7 @@ Good to know when reading the code:
 ### TODO
 
 - RoaRelation methods:
-    - build dynamic form from needed data
-    - support templated urls
+    - <del>build dynamic form from needed data</del>
+    - **support templated urls**
 - requestconfig: resolve against current host (dont expand `/` into full url)
+- response: body: "Content Iframe (uses browser accept header!)"
