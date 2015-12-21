@@ -29,5 +29,3 @@ module.exports = Model.extend mixinTypeSemver,
 
   collections:
     roaRelations: RoaRelations
-
-  extraProperties: 'reject'

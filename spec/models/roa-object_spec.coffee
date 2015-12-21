@@ -10,7 +10,7 @@ testData = f.merge require('../fixtures/roa-example.json'), {
 }
 
 test 'roa model ', (t)->
-  t.plan(2) # subtests
+  t.plan(1) # subtests
 
   t.test 'from parsing data', (t)->
     t.plan(4)
@@ -79,8 +79,8 @@ test 'roa model ', (t)->
 
 
 
-  t.test 'from invalid data', (t)->
-      t.plan(1)
+  # t.test 'from invalid data', (t)->
+  #     t.plan(1)
 
       # t.throws ()->
       #   new roaObject(f.omit(testData, 'version'), parse: true)
@@ -92,10 +92,10 @@ test 'roa model ', (t)->
       # , /pending/
       # , 'throws without url'
 
-      t.throws ()->
-        new roaObject(f.merge({}, testData, foo: 'bar'), parse: true)
-      , /TypeError: No \"foo\" property defined/
-      , 'throws with extra props'
+      # t.throws ()->
+      #   new roaObject(f.merge({}, testData, foo: 'bar'), parse: true)
+      # , /TypeError: No \"foo\" property defined/
+      # , 'throws with extra props'
 
       # TODO: refactor validation from response into roa object…
       # t.throws ()->
