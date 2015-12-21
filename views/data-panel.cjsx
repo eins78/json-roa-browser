@@ -58,7 +58,7 @@ module.exports = React.createClass
 
       {if open
         <div className='list-group-item-body'>
-        {{children} if children?}
+        {children if children?}
         <pre id={id} className={'source-code small ' + preClass}>
           {text}
         </pre>

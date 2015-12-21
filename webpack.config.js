@@ -1,4 +1,4 @@
-var autoPrefixer = require('autoprefixer-core')
+var autoPrefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -6,25 +6,25 @@ module.exports = {
   output: {
     path: __dirname + '/build/',
     filename: 'app.js',
-      // cssFilename: 'app.css',
-      hash: true,
-      // publicPath: '/'
+    // cssFilename: 'app.css',
+    hash: true
+    // publicPath: '/'
   },
   resolve: {
     // we can leave off file extensions for js-like sources:
     // still need to transform them with a loader!
     'extensions': [
       // (node.js) defaults:
-     '', // need to leave this…
-     '.js',
-     '.json',
+      '', // need to leave this…
+      '.js',
+      '.json',
       //  extra:
-     '.coffee',
-     '.jsx',
-     '.cjsx'
+      '.coffee',
+      '.jsx',
+      '.cjsx'
     ]
   },
-  // how to `require()` things:
+  // and how to load them when they are `require()`ed, also by extension:
   module: {
     // how to transform non-js sources:
     loaders: [
@@ -45,10 +45,10 @@ module.exports = {
       // js dialects are just transformed:
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loaders: [
-          'babel-loader'
-        ]
+        // NOTE: some npm modules are published in ES2015, exclude from exlusion
+        exclude: /(node_modules\/(?!qs))/,
+        loader: 'babel-loader',
+        query: { presets: ['es2015', 'react'] }
       },
       {
         test: /\.coffee$/,
@@ -68,7 +68,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'JSON-ROA Browser',
       template: 'node_modules/html-webpack-template/index.html',
-      mobile: true,
+      mobile: true
       // devServer: 8080,
       // appMountId: 'app',
       // window: {
