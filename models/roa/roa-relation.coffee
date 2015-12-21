@@ -1,5 +1,5 @@
 Model = require('ampersand-state')
-f = require('lodash')
+f = require('active-lodash')
 
 RoaMetaRelations = require('./roa-meta-relations')
 

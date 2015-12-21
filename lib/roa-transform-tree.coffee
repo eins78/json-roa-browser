@@ -23,7 +23,7 @@ transformRoaRelations = (relations)-> # recurses
 
 transformRoaRelationsFrom = (item)->
   return item unless typeof item is 'object'
-  f.merge {}, f.assign({}, item, relations: undefined),
+  f.merge f.assign(item, relations: undefined),
     roaRelations: transformRoaRelations(item.relations)
 
 hashToArrayWithKey = (object)->
