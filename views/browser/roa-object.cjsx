@@ -30,9 +30,9 @@ module.exports = React.createClass
       </div>
 
       <ListGroup>
-        <RoaSelfRelation selfRelation={roa.get('roaSelfRelation')} url={roa.url}/>
-        <RoaCollection collection={roa.get('roaCollection')} url={roa.url}/>
-        <RoaRelations relations={roa.get('roaRelations')} url={roa.url}/>
+        <RoaSelfRelation selfRelation={roa.get('roaSelfRelation')} url={roa.baseUrl}/>
+        <RoaCollection collection={roa.get('roaCollection')} url={roa.baseUrl}/>
+        <RoaRelations relations={roa.get('roaRelations')} url={roa.baseUrl}/>
       </ListGroup>
 
     </div>
@@ -74,25 +74,16 @@ RoaRelationList = React.createClass
       <table className='table table-striped table-condensed'><thead></thead>
         <tbody>
           {relations.map (relation)->
-            <RoaRelationListItem relation={relation} url={url} key={relation.getId()}/>
+            <RoaRelationListItem relation={relation} baseUrl={url} key={relation.getId()}/>
           }
         </tbody>
       </table>
     </div>
 
+# 1 row for each Relation in section
 RoaRelationListItem = React.createClass
   render: ()->
-    {relation, url} = @props
-
-    console.log relation.serialize() unless url? or relation.href?
-
-    methods = f.mapValues relation.methods, (obj)->
-      f.assign {}, obj, if uriTemplates.isTemplated(relation.href)
-        templatedUrl: libUrl.resolve(url, relation.href)
-      else
-        url: libUrl.resolve(url, relation.href)
-
-    console.log methods
+    {relation, baseUrl} = @props
 
     <tr className='relation-row'>
       {false && <td className='col-sm-2'>
@@ -103,17 +94,18 @@ RoaRelationListItem = React.createClass
         <ul className='list-inline list-unstyled'>
           {relation.roaRelations.map (metaRel)->
             <li key={metaRel.getId()}>
-              <a href={libUrl.resolve(url, metaRel.href)}>
+              <a href={libUrl.resolve(baseUrl, metaRel.href)}>
                 <Icon icon='link fa-rotate-90'/>{metaRel.title}</a></li>
           }
         </ul>
       </td>
       <td className='methods col-sm-3'>
-        <MethodButtons methods={methods}/></td>
+        <MethodButtons methods={relation.methods}
+          url={relation.href} baseUrl={baseUrl}/></td>
     </tr>
 
 MethodButtons = React.createClass
-  render: ()->
+  render: ({url, methods, baseUrl} = @props)->
     styleMap = # bootstrap levels
       get: 'success'
       post: 'primary'
@@ -121,8 +113,13 @@ MethodButtons = React.createClass
       patch: 'info'
       delete: 'danger'
 
+    # methods = f.mapValues methods, (obj)->
+    #   f.assign {}, obj, if uriTemplates.isTemplated(relation.href)
+    #     templatedUrl: libUrl.resolve(baseUrl, relation.href)
+    #   else
+    #     url: libUrl.resolve(baseUrl, relation.href)
     # sort methods like the order defined in styleMap (extra keys at the end)
-    methods = f(@props.methods).sortKeysLike(f.keys(styleMap))
+    methods = f(methods).sortKeysLike(f.keys(styleMap))
 
     onMethodSubmit = @props.onMethodSubmit
 
@@ -130,6 +127,8 @@ MethodButtons = React.createClass
       {f.map methods, (obj, key)->
         bsStyle = styleMap[key] or 'warning'
         isTemplated = obj.templatedUrl?
+        # determine if it needs a form at all
+        canBeLink = key is 'get' and isTemplated isnt true
         # determine if it needs a form (url template or actions needs data)
         needsFormInput = isTemplated or not f.includes(['get', 'delete'], key)
 
@@ -143,7 +142,7 @@ MethodButtons = React.createClass
               templatedUrl: obj.templatedUrl
             }
         else
-          href = obj.url # makes it a valid link!
+          href = libUrl.resolve(baseUrl, url) # makes it a valid link!
           onClick = (event, config) ->
             # Only handle click meant to be internal by user:
             # NOTE: cant use `local-links` here because link target is irrelevant.

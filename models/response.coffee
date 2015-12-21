@@ -35,8 +35,9 @@ module.exports = Model.extend
       app.trigger('warning', 'JSON-ROA Version newer than expected')
 
     # all prechecks are done, try to init models and catch errors as well
+    props = f.assign(@jsonRoaRaw, baseUrl: @requestConfig.url)
     try
-      @roaObject= new RoaObject(f.assign(@jsonRoaRaw, url: @url), parse: on)
+      @roaObject= new RoaObject(props, parse: on)
     catch error
       @roaError= error.toString()
 
@@ -50,7 +51,6 @@ module.exports = Model.extend
     method: 'string'
     headers: 'object'
     requestConfig: 'object'
-    url: 'string'
     runningTime: 'number'
 
     roaObject: 'object' # TODO: RoaObject datatype
