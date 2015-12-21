@@ -2,6 +2,8 @@ React = require('react')
 ampersandReactMixin = require 'ampersand-react-mixin'
 Browser = require('./browser')
 
+# Layout: wraps the `browser` which is attached to `app`
+
 module.exports = React.createClass
   displayName: 'AppLayout'
   mixins: [ampersandReactMixin]

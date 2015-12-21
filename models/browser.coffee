@@ -25,7 +25,7 @@ module.exports = Model.extend
     formAction: 'object'
     currentRequest: 'object'
     lastRequest: 'object'
-    response: Response
+    response: 'object' # TODO: Response
 
   # run on 'create' when option parse=true
   parse: (data) ->

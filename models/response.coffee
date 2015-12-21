@@ -53,7 +53,7 @@ module.exports = Model.extend
     url: 'string'
     runningTime: 'number'
 
-    roaObject: RoaObject
+    roaObject: 'object' # TODO: RoaObject datatype
     roaError: 'string'
 
   derived:

@@ -4,7 +4,7 @@ f = require('./fun')
 # can have a `relations` key, recursivly transform those hashes to arrays.
 # Note: `merge` just for cleaning up keys
 module.exports = (data)->
-  f.merge {}, f.assign {},
+  f.merge f.assign data,
     version: data.version
     relations: undefined
     roaRelations: transformRoaRelations(data.relations),

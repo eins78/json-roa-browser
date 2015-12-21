@@ -3,6 +3,8 @@ stringify = require('json-stringify-pretty-compact')
 Btn = require('react-bootstrap/lib/Button')
 Icon = require('./icon')
 
+WIDTH = 60
+
 module.exports = React.createClass
   displayName: 'DataPanel'
 
@@ -24,10 +26,8 @@ module.exports = React.createClass
     else
       defaultOpen and (text? or dataObj? or children?)
 
-    width = 60
-
     # if no text given, stringify data
-    text ||= if dataObj? then (try stringify(dataObj, maxLength: width))
+    text ||= if dataObj? then (try stringify(dataObj, maxLength: WIDTH))
     text ||= '[No Data]'
 
     exandable = (text.split('\n').length > 20)
@@ -58,9 +58,7 @@ module.exports = React.createClass
 
       {if open
         <div className='list-group-item-body'>
-        {children if children?}
-        <pre id={id} className={'source-code small ' + preClass}>
-          {text}
-        </pre>
-        </div>}
+          {children if children?}
+          <pre id={id} className={'source-code small ' + preClass}>{text}</pre>
+          </div>}
     </li>
