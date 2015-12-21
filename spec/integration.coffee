@@ -1,6 +1,8 @@
 test = require('tape')
 webdriverio = require('webdriverio')
 
+console.log 'Selenium port: ' + process.env.CI_SELENIUM_PORT
+
 browser = webdriverio.remote
   port: process.env.CI_SELENIUM_PORT || 4444
   baseUrl: 'http://localhost:' + process.env.CI_ROA_API_PORT || 5000

@@ -1,0 +1,9 @@
+build:
+  body: |
+    #!/usr/bin/env bash
+    set -exu
+    npm run -s build
+    rm -rf spec/demo-app/resources/api-browser
+    ln -s build spec/demo-app/resources/api-browser
+  start-when:
+    - script: npm-install

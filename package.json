@@ -22,6 +22,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@eins78/active-lodash": "0.0.1",
     "ampersand-app": "1.0.4",
     "ampersand-collection": "1.5.0",
     "ampersand-model": "6.0.2",

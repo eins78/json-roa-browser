@@ -1,0 +1,3 @@
+npm-install:
+  exclusive-executor-resource: npm-modules
+  body: bin/install_npm_modules_with_caching.sh

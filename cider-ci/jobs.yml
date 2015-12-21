@@ -14,11 +14,18 @@ jobs:
 
       task-defaults:
         _cider-ci_include:
-          - cider-ci/defaults/misc.yml
-          - cider-ci/defaults/attachments.yml
-          - cider-ci/defaults/traits.yml
-          - cider-ci/defaults/ports.yml
-          - cider-ci/defaults/scripts.yml
+          - cider-ci/shared/misc.yml
+          - cider-ci/shared/attachments.yml
+          - cider-ci/shared/traits.yml
+          - cider-ci/shared/ports.yml
+          - cider-ci/shared/scripts.yml
+        scripts:
+          _cider-ci_include:
+            - 'cider-ci/shared/scripts/npm-install.yml'
+            - 'cider-ci/shared/scripts/manage-database.yml'
+            - 'cider-ci/shared/scripts/manage-xvnc.yml'
+            - 'cider-ci/shared/scripts/run-services.yml'
+            - 'cider-ci/shared/scripts/shutdown-and-cleanup.yml'
 
       tasks:
         integration:
@@ -29,6 +36,7 @@ jobs:
                 #!/usr/bin/env bash
                 npm run -s integration-tests
               start-when:
+              - script: build
               - script: api-is-running
               - script: run-selenium
                 states: [executing]
