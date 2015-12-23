@@ -6,7 +6,7 @@ ResponseInfo = require('./browser/response-info')
 ErrorPanel = require('./browser/error-panel')
 RunningPanel = require('./browser/running-panel')
 RoaObject = require('./browser/roa-object')
-ActionForm = require('./browser/action-form.cjsx')
+ActionForm = require('./browser/action-form')
 
 # API Browser UI
 module.exports = React.createClass
@@ -32,10 +32,10 @@ module.exports = React.createClass
   render: ()->
     browser = @props.browser
 
-    {# Browser Tab#}
+    {# Browser Tab #}
     <div className='modal-container'>
 
-      {# Per-Browser Modal for One-Time Forms#}
+      {# Per-Browser Modal for One-Time Forms #}
       {if f.presence(browser.formAction)?
         <ActionForm config={browser.formAction}
           onSubmit={@onFormActionSubmit}

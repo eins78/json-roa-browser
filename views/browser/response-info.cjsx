@@ -7,11 +7,7 @@ module.exports = React.createClass
   displayName: 'ResponseInfo'
   mixins: [ampersandReactMixin]
 
-  render: ()->
-    {response} = @props
-
-    console.log 'RESPONSE', response
-
+  render: ({response} = @props)->
     level = if response.statusCode < 400 then 'success' else 'danger'
     panelClass = "panel panel-#{level}"
     labelClass = "label label-#{level}"
@@ -26,17 +22,15 @@ module.exports = React.createClass
       </div>
 
       <ul className="list-group">
-        <DataPanel title='Request Config' dataObj={response.requestConfig}>
-          <samp><small>{response.method} {response.url}</small></samp>
-        </DataPanel>
+        <DataPanel title='Request Config' dataObj={response.requestConfig}/>
         <DataPanel title='Headers'
             text={response.headersText} dataObj={response.headers}/>
 
         {if response.jsonRaw?
-          <DataPanel title='JSON Data' dataObj={response.jsonRaw}/>
-        }
+          <DataPanel title='JSON Data' dataObj={response.jsonRaw}/>}
+
         {if response.jsonRoaRaw?
-          <DataPanel title='JSON-ROA Data' dataObj={response.jsonRoaRaw}/>
-        }
+          <DataPanel title='JSON-ROA Data' dataObj={response.jsonRoaRaw}/>}
+
       </ul>
     </div>

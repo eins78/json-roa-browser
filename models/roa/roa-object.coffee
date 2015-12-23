@@ -10,7 +10,7 @@ RoaCollection = require('./roa-collection')
 module.exports = Model.extend mixinTypeSemver,
   type: 'RoaObject'
 
-  parse: parseRoaTree # more friendly: keynames; arrays for preserving order
+  parse: parseRoaTree # more friendly keynames; arrays for preserving order
 
   props:
     # > "A minimal valid JSON-ROA extension must contain the key version

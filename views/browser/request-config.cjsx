@@ -45,7 +45,7 @@ module.exports = React.createClass
             <label htmlhtmlFor="request-headers">HTTP Headers</label>
             <textarea className="form-control small"
               id="request-headers"
-              rows='3'
+              rows={(conf.headers or '').split("\n").length}
               value={conf.headers}
               onChange={f.curry(@updateConfigKey)('headers')}/>
           </div>

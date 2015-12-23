@@ -22,7 +22,7 @@ module.exports = React.createClass
   onClose: ()-> @props.onClose?()
   onSubmit: (event)->
     @props.onSubmit event,
-      f.merge({}, @props.defaultFormData, @props.config, @state.formData)
+      f.merge(@props.defaultFormData, @props.config, @state.formData)
 
   render: ()->
     {container} = @props

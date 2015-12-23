@@ -1,2 +1,2 @@
 default:
-	npm run build
+	npm run -s build

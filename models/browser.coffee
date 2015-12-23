@@ -40,7 +40,7 @@ module.exports = Model.extend
     hashchange.updateHash(urlQuery.stringify(@requestConfig.serialize()))
     setTimeout((-> hashchange.update(app.onHashChange)), 10) # "next tick"
 
-  clear: () ->
+  clear: ()->
     @currentRequest?.curl.abort()
     @requestConfig.clear()
     Model::clear.call(@)
@@ -71,15 +71,16 @@ module.exports = Model.extend
     # reset current request
     @response = null
     if @currentRequest?
-      @currentRequest.curl.abort()
+      @currentRequest.curl.abort() if f.isFunction(@currentRequest.curl.abort)
       @currentRequest = null
 
     # run and keep reference (with time), build new response when finished:
-    @currentRequest = f.assign {started: (new Date().getTime())},
+    @currentRequest =
+      started: (new Date().getTime()),
       curl: curl config, (err, res)=>
         @lastRequest = @currentRequest
         @currentRequest = null
         @response = unless err
-          new Response(f.assign({}, res, {requestConfig: config}))
+          new Response(f.assign(res, requestConfig: config))
         else
           new Response(error: err.toString())

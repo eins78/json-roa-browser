@@ -4,7 +4,6 @@ app = require('ampersand-app')
 Button = require('react-bootstrap/lib/Button')
 ButtonGroup = require('react-bootstrap/lib/ButtonGroup')
 ListGroup = require('react-bootstrap/lib/ListGroup')
-ListGroupItem = require('react-bootstrap/lib/ListGroupItem')
 f = require('../../lib/fun')
 Icon = require('../icon')
 isLocalClick = require('../../lib/local-clicks')
@@ -29,7 +28,7 @@ module.exports = React.createClass
         <h3>ROA Object</h3>
       </div>
 
-      <ListGroup>
+      <ListGroup componentClass='div'>
         <RoaSelfRelation selfRelation={roa.get('roaSelfRelation')} url={roa.baseUrl}/>
         <RoaCollection collection={roa.get('roaCollection')} url={roa.baseUrl}/>
         <RoaRelations relations={roa.get('roaRelations')} url={roa.baseUrl}/>
@@ -49,7 +48,7 @@ RoaSelfRelation = React.createClass
 RoaCollection = React.createClass
   render: ()->
     collection = @props.collection
-    return null unless collection?.roaRelations.length > 1
+    return null unless collection?.roaRelations.length > 0
 
     <ListGroupItem header='Collection'>
       [next link]
@@ -82,11 +81,11 @@ RoaRelationList = React.createClass
 
 # 1 row for each Relation in section
 RoaRelationListItem = React.createClass
-  render: ()->
-    {relation, baseUrl} = @props
+  render: ({relation, baseUrl} = @props)->
+    showKey = false
 
     <tr className='relation-row'>
-      {false && <td className='col-sm-2'>
+      {showKey && <td className='col-sm-2'>
         <samp><strong><small>{relation.keyName}</small></strong></samp></td>}
       <td className='title col-sm-2'>
         {relation.title}</td>
@@ -155,3 +154,10 @@ MethodButtons = React.createClass
         </Button>
       }
     </ButtonGroup>
+
+
+ListGroupItem = ({header, children} = @props)->
+  <div className='list-group-item'>
+    <h4 className='list-group-item-heading'>{header}</h4>
+    {children}
+  </div>
