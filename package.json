@@ -69,7 +69,7 @@
     "selenium-standalone": "^4.8.0",
     "style-loader": "^0.13.0",
     "tap-spec": "^4.1.1",
-    "tape": "^4.2.2",
+    "tape": "^4.3.0",
     "typopro-web": "^3.4.2",
     "url-loader": "^0.5.7",
     "webdriverio": "^3.3.0",
