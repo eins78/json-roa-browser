@@ -1,1 +1,38 @@
+# NOTE: integration tests and more complex setup is prepared but not enabled:
 # _cider-ci_include: cider-ci/jobs.yml
+
+# for now, basic unit test config:
+jobs:
+  'Tests':
+
+    run-on: [{type: branch, include-match: ^.*$}]
+
+    context:
+
+      task-defaults:
+        max-auto-trials: 1
+        traits:
+          nodejs: true
+        scripts:
+          npm-install:
+            exclusive-executor-resource: npm-modules
+            body: cider-ci/bin/install_npm_modules_with_caching.sh
+        trial-attachments:
+          logs:
+            glob: spec/log*.txt
+            content-type: text/plain
+          logs_html:
+            glob: spec/log*.html
+            content-type: text/html
+
+      tasks:
+        unit:
+          name: 'JS Tests'
+          scripts:
+            model-tests:
+              name: 'Model Tests'
+              body: 'npm -s run model-tests'
+              start-when: [script: npm-install]
+            # format-tap:
+            #   body: 'cat spec/log.txt | npm run -s tap-spec -- --color | npm run -s coffee spec/_format-summary.coffee > spec/log.html'
+            #   start-when: [script: model-tests]
