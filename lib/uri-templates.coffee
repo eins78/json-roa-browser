@@ -1,6 +1,6 @@
 uriTemplates = require('uri-templates')
 
 uriTemplates.isTemplated = (url)->
-  url != (try uriTemplates(url).fill({}))
+  uriTemplates(url).varNames.length > 0
 
 module.exports = uriTemplates
