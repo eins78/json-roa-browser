@@ -67,7 +67,7 @@ module.exports = {
     // generate a simple index.html referencing all entries
     new HtmlWebpackPlugin({
       title: 'JSON-ROA Browser',
-      template: 'node_modules/html-webpack-template/index.html',
+      template: 'node_modules/html-webpack-template/index.ejs',
       mobile: true
       // devServer: 8080,
       // appMountId: 'app',
