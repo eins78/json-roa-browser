@@ -19,11 +19,11 @@ jobs:
             body: cider-ci/bin/install_npm_modules_with_caching.sh
         trial-attachments:
           logs:
-            glob: spec/log*.txt
             content-type: text/plain
+            include-match: spec/log*.txt
           logs_html:
-            glob: spec/log*.html
             content-type: text/html
+            include-match: spec/log*.html
 
       tasks:
         unit:

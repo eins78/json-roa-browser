@@ -1,7 +1,7 @@
 trial-attachments:
   logs:
-    glob: spec/log*.txt
+    include-match: spec/log*.txt
     content-type: text/plain
   logs_html:
-    glob: spec/log*.html
+    include-match: spec/log*.html
     content-type: text/html
