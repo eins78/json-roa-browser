@@ -28,7 +28,7 @@
     "ampersand-collection": "^1.6.1",
     "ampersand-model": "^6.0.2",
     "ampersand-react-mixin": "^1.0.1",
-    "ampersand-state": "^4.9.1",
+    "ampersand-state": "^5.0.0",
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
