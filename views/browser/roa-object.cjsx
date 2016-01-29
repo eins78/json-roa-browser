@@ -59,8 +59,14 @@ RoaCollection = React.createClass
     return null unless collection?.roaRelations.length > 0
 
     <ListGroupItem header='Collection'>
-      [next link]
       <RoaRelationList url={@props.url} relations={collection.roaRelations}/>
+      {if (nextLink = collection.next.href)
+        onClick = (event)-> localLinkHelper(event, nextLink)
+        <ButtonGroup bsSize='xs'>
+          <Button href={nextLink} bsStyle='success' bsSize='small' onClick={onClick}>
+            <samp>GET next </samp> <Icon icon='arrow-circle-right'/>
+          </Button>
+        </ButtonGroup>}
     </ListGroupItem>
 
 RoaRelations = React.createClass
