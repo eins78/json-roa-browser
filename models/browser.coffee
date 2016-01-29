@@ -50,10 +50,17 @@ module.exports = Model.extend
     @save()
     @runRequest()
 
+  # runs a "one-off" request (issued from a modal).
+  # only affects `browser.requestConfig` in case of GET request (URL is set)
   runFormActionRequest: (config)->
     # build config from submitted form, current formAction und main request
-    config = f.defaults {}, config, @formAction, @requestConfig.serialize()
-    # clear the form and execute request
+    config = f.chain()
+      .defaults(config, @formAction, @requestConfig.serialize())
+      .pick('url', 'method', 'headers', 'body').run()
+
+    # save some state, clear form, and execute request
+    if config.method.toUpperCase() is 'GET' then @requestConfig.url = config.url
+    @save()
     @formAction = null
     @runRequest(config)
 

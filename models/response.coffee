@@ -1,6 +1,7 @@
 Model = require('ampersand-state')
 app = require('ampersand-app')
 httpStatusText = require('node-status-codes')
+typer = require('media-typer') # NOTE: <npm.im/content-type> would be more correct but doe not include subtype o_O
 SemVer = require('semver')
 f = require('../lib/fun')
 stringifyHeaders = require('../lib/stringify-http-headers')
@@ -65,10 +66,24 @@ module.exports = Model.extend
       deps: ['headers']
       fn: ()-> stringifyHeaders(@headers, padding: true)
 
+    mediaType:
+      deps: ['headers']
+      fn: ()->
+        contentType = f.get(@headers, 'content-type')
+        (try typer.parse(contentType)) or {type: 'text', subtype: 'html'}
+
+    isJSON:
+      deps: ['mediaType']
+      fn: ()-> (@mediaType.subtype is 'json') or (@mediaType.suffix is 'json')
+
+    jsonBody:
+      deps: ['body', 'isJSON']
+      fn: ()-> if @isJSON then @body
+
     jsonRaw:
-      deps: ['body']
-      fn: ()-> f(this.body).omit(ROA_PROP).presence()
+      deps: ['isJSON', 'jsonBody']
+      fn: ()-> if @isJSON then f.presence f.omit(@jsonBody, ROA_PROP)
 
     jsonRoaRaw:
-      deps: ['body']
-      fn: ()-> f(this.body).get(ROA_PROP)
+      deps: ['isJSON', 'jsonBody']
+      fn: ()-> if @isJSON then f.presence f.get(@jsonBody, ROA_PROP)

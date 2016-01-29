@@ -5,10 +5,18 @@ Button = require('react-bootstrap/lib/Button')
 ButtonGroup = require('react-bootstrap/lib/ButtonGroup')
 ListGroup = require('react-bootstrap/lib/ListGroup')
 f = require('../../lib/fun')
+deco = require('../lib/decorators')
 Icon = require('../icon')
 isLocalClick = require('../../lib/local-clicks')
 libUrl = require('url')
 uriTemplates = require('../../lib/uri-templates')
+
+# TMP: local link handler helper
+localLinkHelper = (event, href) ->
+  # NOTE: cant use `npm.im/local-links` here because link target is irrelevant:
+  return unless isLocalClick(event)
+  event.preventDefault()
+  app.browser.onRequestSubmit(href)
 
 module.exports = React.createClass
   displayName: 'RoaObject'
@@ -105,52 +113,43 @@ RoaRelationListItem = React.createClass
 
 MethodButtons = React.createClass
   render: ({url, methods, baseUrl} = @props)->
-    styleMap = # bootstrap levels
-      get: 'success'
-      post: 'primary'
-      put: 'info'
-      patch: 'info'
-      delete: 'danger'
 
-    # methods = f.mapValues methods, (obj)->
-    #   f.assign {}, obj, if uriTemplates.isTemplated(relation.href)
-    #     templatedUrl: libUrl.resolve(baseUrl, relation.href)
-    #   else
-    #     url: libUrl.resolve(baseUrl, relation.href)
+    methods = f.mapValues methods, (obj)->
+      f.assign obj, if uriTemplates.isTemplated(url)
+        templatedUrl: url
+      else
+        url: libUrl.resolve(baseUrl, url)
     # sort methods like the order defined in styleMap (extra keys at the end)
-    methods = f(methods).sortKeysLike(f.keys(styleMap))
+    methods = deco.sortMethods(methods)
 
     onMethodSubmit = @props.onMethodSubmit
 
     <ButtonGroup bsSize='xs'>
-      {f.map methods, (obj, key)->
-        bsStyle = styleMap[key] or 'warning'
+      {f.map methods, (obj, method)->
+        bsStyle = deco.methodNameToBootstrapeLevel(method)
         isTemplated = obj.templatedUrl?
         # determine if it needs a form at all
-        canBeLink = key is 'get' and isTemplated isnt true
+        canBeLink = (method is 'get' and isTemplated isnt true)
         # determine if it needs a form (url template or actions needs data)
-        needsFormInput = isTemplated or not f.includes(['get', 'delete'], key)
+        needsFormInput = (method isnt 'delete')
 
         # TMP: dirty: actions here… move this to roa models…
-        if needsFormInput
+        if canBeLink
+          # build a valid link, but intercept "local" clicks (new tabs work!)
+          href = libUrl.resolve(baseUrl, url)
+          onClick = (event, config) -> localLinkHelper(event, href)
+        else
           icon = <Icon icon='pencil-square'/>
           onClick = (event)->
             app.browser.formAction = {
-              method: key.toUpperCase(),
+              method: method
               url: obj.url
               templatedUrl: obj.templatedUrl
+              defaults: f.defaults app.DEFAULTS.formAction
             }
-        else
-          href = libUrl.resolve(baseUrl, url) # makes it a valid link!
-          onClick = (event, config) ->
-            # Only handle click meant to be internal by user:
-            # NOTE: cant use `local-links` here because link target is irrelevant.
-            return unless isLocalClick(event)
-            event.preventDefault()
-            app.browser.onRequestSubmit(href)
 
-        <Button href={href} onClick={onClick} bsStyle={bsStyle} key={key}>
-          {icon} <samp>{key.toUpperCase()}</samp>
+        <Button href={href} onClick={onClick} bsStyle={bsStyle} key={method}>
+          {icon} <samp>{method.toUpperCase()}</samp>
         </Button>
       }
     </ButtonGroup>

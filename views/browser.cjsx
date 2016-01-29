@@ -37,11 +37,10 @@ module.exports = React.createClass
 
       {# Per-Browser Modal for One-Time Forms #}
       {if f.presence(browser.formAction)?
-        <ActionForm config={browser.formAction}
+        <ActionForm {...browser.formAction}
           onSubmit={@onFormActionSubmit}
           onClose={@onFormActionCancel}
-          defaultFormData={browser.DEFAULTS().formAction}
-          container={this}/>
+          modalContainer={this}/>
       }
 
       {# Main Browser UI #}
