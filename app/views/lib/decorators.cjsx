@@ -1,5 +1,6 @@
 # application-specific visual config and elements
-f = require('../../lib/fun')
+f = require('active-lodash')
+
 methodStyleMap = # bootstrap levels
   get: 'success'
   post: 'primary'
@@ -8,6 +9,12 @@ methodStyleMap = # bootstrap levels
   delete: 'danger'
   _else: 'warning'
 
+f.mixin {
+  # return object with keys sorted like word in array, extra keys at the end.
+  sortKeysLike: (obj, keys)->
+    f(keys).map((k)-> if (v=f(obj).get(k))? then [k,v]).filter().zipObject()
+      .merge(obj).value()
+}, {chain: false}
 
 module.exports =
   methodNameToBootstrapeLevel: (method)->

@@ -1,6 +1,6 @@
 React = require('react')
 ampersandReactMixin = require('ampersand-react-mixin')
-f = require('../lib/fun')
+f = require('active-lodash')
 RequestConfig = require('./browser/request-config')
 ResponseInfo = require('./browser/response-info')
 ErrorPanel = require('./browser/error-panel')

@@ -1,4 +1,4 @@
-f = require('./fun')
+f = require('active-lodash')
 
 # For the root object itself, and all properties of the root object which
 # can have a `relations` key, recursivly transform those hashes to arrays.

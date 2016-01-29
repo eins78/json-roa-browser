@@ -3,7 +3,7 @@ app = require('ampersand-app')
 httpStatusText = require('node-status-codes')
 typer = require('media-typer') # NOTE: <npm.im/content-type> would be more correct but doe not include subtype o_O
 SemVer = require('semver')
-f = require('../lib/fun')
+f = require('active-lodash')
 stringifyHeaders = require('../lib/stringify-http-headers')
 RoaObject = require('./roa/roa-object')
 

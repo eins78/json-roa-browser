@@ -3,7 +3,7 @@ ampersandReactMixin = require 'ampersand-react-mixin'
 Btn = require('react-bootstrap/lib/Button')
 BtnGroup = require('react-bootstrap/lib/ButtonGroup')
 Icon = require('../icon')
-f = require('../../lib/fun')
+f = require('active-lodash')
 
 module.exports = React.createClass
   # react methods:

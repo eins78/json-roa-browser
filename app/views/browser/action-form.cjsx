@@ -13,7 +13,7 @@ ButtonGroup = require('react-bootstrap/lib/ButtonGroup')
 Input = require('react-bootstrap/lib/Input')
 Modal = require('react-bootstrap/lib/Modal')
 
-f = require('../../lib/fun')
+f = require('active-lodash')
 deco = require('../lib/decorators')
 uriTemplates = require('../../lib/uri-templates')
 

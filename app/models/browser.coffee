@@ -4,7 +4,7 @@ app = require('ampersand-app')
 parseHeaders = require('parse-headers')
 hashchange = require('hashchange')
 urlQuery = require('qs')
-f = require('../lib/fun')
+f = require('active-lodash')
 curl = require('../lib/curl')
 
 RequestConfig = require('./request-config')
