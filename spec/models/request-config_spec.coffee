@@ -1,7 +1,7 @@
 test = require('tape')
 
 # very simple, but doubles as smokescreen if the models work at all
-requestConfig = require('../../models/request-config')
+requestConfig = require('../../app/models/request-config')
 
 test 'request-config', (t)->
   t.plan(2) # subtests

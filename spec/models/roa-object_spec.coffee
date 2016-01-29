@@ -1,7 +1,7 @@
 test = require('tape')
-f = require('../../lib/fun')
+f = require('active-lodash')
 
-roaObject = require('../../models/roa/roa-object')
+roaObject = require('../../app/models/roa/roa-object')
 
 testData = f.merge require('../fixtures/roa-example.json'), {
   # added by us:

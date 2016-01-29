@@ -2,7 +2,7 @@ var autoPrefixer = require('autoprefixer')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './main',
+  entry: './app/index',
   output: {
     path: __dirname + '/build/',
     filename: 'app.js',
