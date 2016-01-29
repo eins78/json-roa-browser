@@ -17,22 +17,36 @@ jobs:
           npm-install:
             exclusive-executor-resource: npm-modules
             body: cider-ci/bin/install_npm_modules_with_caching.sh
-        trial-attachments:
-          logs:
-            content-type: text/plain
-            include-match: spec/log*.txt
-          logs_html:
-            content-type: text/html
-            include-match: spec/log*.html
 
       tasks:
-        unit:
-          name: 'JS Tests'
+
+        build:
+          scripts:
+            build:
+              name: 'Build'
+              start-when: [script: npm-install]
+              body: npm run -s build && tar -czf build.tgz build/*
+            filesize:
+              name: 'Is the app filesize less than 1MB? (gzipped)'
+              start-when: [script: build]
+              body: |
+                #!/usr/bin/env node
+                var size = require("fs").statSync("./build.tgz").size
+                console.log((size/1024).toFixed(2)+"K")
+                if (size > 1024 * 1024) process.exit(1)
+          # tree-attachments:
+          #   build: { content-type: application/gzip, include-match: build.tgz }
+
+        model:
+          name: 'Model/Unit Tests'
           scripts:
             model-tests:
               name: 'Model Tests'
-              body: 'npm -s run model-tests'
               start-when: [script: npm-install]
-            # format-tap:
-            #   body: 'cat spec/log.txt | npm run -s tap-spec -- --color | npm run -s coffee spec/_format-summary.coffee > spec/log.html'
-            #   start-when: [script: model-tests]
+              body: 'npm -s run model-tests > spec/log.txt'
+            format-tap:
+              body: 'cat spec/log.txt | npm run -s tap-spec -- --color | npm run -s coffee spec/_format-summary.coffee > spec/log.html'
+              start-when: [script: model-tests]
+          # trial-attachments:
+          #   logs_txt: { content-type: text/plain, include-match: spec/log*.txt }
+          #   logs_html: { content-type: text/html, include-match: spec/log*.html }
