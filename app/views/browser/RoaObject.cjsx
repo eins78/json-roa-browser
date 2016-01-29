@@ -99,11 +99,11 @@ RoaRelationListItem = React.createClass
   render: ({relation, baseUrl} = @props)->
     showKey = true
 
-    <tr className='relation-row'>
+    <tr className='relation-row' data-relation-name={relation.keyName}>
       {showKey && <td className='col-sm-2'>
         <samp><strong><small>{relation.keyName}</small></strong></samp></td>}
       <td className='title col-sm-2'>
-        {relation.title}</td>
+        <span  title={relation.keyName}>{relation.title}</span></td>
       <td className='meta-relations col-sm-4'>
         <ul className='list-inline list-unstyled'>
           {relation.roaRelations.map (metaRel)->

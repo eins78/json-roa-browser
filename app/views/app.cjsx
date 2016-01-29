@@ -15,7 +15,9 @@ module.exports = React.createClass
 
       <nav className="navbar navbar-default navbar-static-top">
         <div className="container-fluid">
-          <h1>{app.DEFAULTS.strings.appTitle}</h1>
+          <h1>{app.DEFAULTS.strings.appTitle} <small>
+            {app.DEFAULTS.version}</small>
+          </h1>
         </div>
       </nav>
 

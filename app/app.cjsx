@@ -3,6 +3,7 @@ React = require('react') # used indirectly (via JSX)
 ReactDOM = require('react-dom')
 urlQuery = require('qs')
 hashchange = require('hashchange')
+PKG = require('../package.json')
 
 AppView = require('./views/App')
 Browser = require('./models/browser')
@@ -16,6 +17,7 @@ throw new Error('No <app> mountpoint found!') if not container
 
 app.extend
   DEFAULTS: # TODO: make configurable
+    version: PKG.version
     strings:
       appTitle: 'JSON-ROA Hypermedia API Browser'
     formAction:

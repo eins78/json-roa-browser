@@ -4,7 +4,7 @@ module.exports = Model.extend
   props:
     url:
       type: 'string'
-      default: 'https://json-roa-demo.herokuapp.com/'
+      default: '/api' # 'https://json-roa-demo.herokuapp.com/'
       required: true
     headers:
       type: 'string'
