@@ -1,12 +1,17 @@
 React = require('react')
 stringify = require('json-stringify-pretty-compact')
 Btn = require('react-bootstrap/lib/Button')
-Icon = require('./icon')
+Icon = require('./Icon')
 
-WIDTH = 60
+WIDTH = 60 # default assumed content width in characters (em)
 
 module.exports = React.createClass
   displayName: 'DataPanel'
+  propTypes:
+    title: React.PropTypes.node.isRequired
+    text: React.PropTypes.string
+    dataObj: React.PropTypes.object
+    defaultOpen: React.PropTypes.bool
 
   getInitialState: ()-> { open: null, expanded: false }
   onOpenClick: ()-> @setState(open: true)
@@ -15,7 +20,7 @@ module.exports = React.createClass
   onCollapseClick: ()-> @setState(expanded: false)
 
   render: ()->
-    {id, title, level, text, dataObj, defaultOpen, children} = @props
+    {id, title, text, dataObj, defaultOpen, children} = @props
     {open, expanded} = @state
     defaultOpen ||= true
 

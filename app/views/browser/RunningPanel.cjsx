@@ -1,5 +1,5 @@
 React = require('react')
-Icon = require('../icon')
+Icon = require('../lib/Icon')
 
 module.exports = React.createClass
   displayName: 'RunningPanel'

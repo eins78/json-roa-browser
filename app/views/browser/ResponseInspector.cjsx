@@ -1,10 +1,10 @@
 React = require('react')
 ampersandReactMixin = require 'ampersand-react-mixin'
-DataPanel = require('../data-panel')
-Icon = require('../icon')
+DataPanel = require('../lib/DataPanel')
+Icon = require('../lib/Icon')
 
 module.exports = React.createClass
-  displayName: 'ResponseInfo'
+  displayName: 'ResponseInspector'
   mixins: [ampersandReactMixin]
 
   render: ({response} = @props)->

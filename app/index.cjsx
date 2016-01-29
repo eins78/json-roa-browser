@@ -4,7 +4,7 @@ ReactDOM = require('react-dom')
 urlQuery = require('qs')
 hashchange = require('hashchange')
 
-AppView = require('./views/app')
+AppView = require('./views/App')
 Browser = require('./models/browser')
 
 # add css to output:

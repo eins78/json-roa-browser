@@ -1,17 +1,21 @@
 React = require('react')
 ampersandReactMixin = require('ampersand-react-mixin')
 f = require('active-lodash')
-RequestConfig = require('./browser/request-config')
-ResponseInfo = require('./browser/response-info')
-ErrorPanel = require('./browser/error-panel')
-RunningPanel = require('./browser/running-panel')
-RoaObject = require('./browser/roa-object')
-ActionForm = require('./browser/action-form')
+RequestConfig = require('./browser/RequestConfig')
+ResponseInfo = require('./browser/ResponseInspector')
+ErrorPanel = require('./browser/ErrorPanel')
+RunningPanel = require('./browser/RunningPanel')
+RoaObject = require('./browser/RoaObject')
+ActionForm = require('./browser/ActionForm')
+
+browserModel = require('../models/browser')
 
 # API Browser UI
 module.exports = React.createClass
   displayName: 'ApiBrowser'
   mixins: [ampersandReactMixin]
+  propTypes:
+    browser: React.PropTypes.instanceOf(browserModel)
 
   onRequestConfigChange: (key, value)->
     @props.browser.requestConfig.set(key, value)
@@ -20,13 +24,16 @@ module.exports = React.createClass
   onRequestSubmit: (event)->
     @props.browser.onRequestSubmit()
 
+  # when a modal is submitted:
   onFormActionSubmit: (event, config)->
     event.preventDefault()
     @props.browser.runFormActionRequest(config)
 
+  # when a modal is dismissed
   onFormActionCancel: ()->
     @props.browser.unset('formAction')
 
+  # when 'trash' button is clicked
   onClear: ()-> @props.browser.clear()
 
   render: ()->
@@ -62,8 +69,7 @@ module.exports = React.createClass
               <RoaObject roaObject={roaObject} onMethodSubmit={@onMethodSubmit}/>
             when (roaError = browser.response?.roaError)?
               <ErrorPanel title="ROA Error!"
-                errorText={roaError}/>
-          }
+                errorText={roaError}/>}
         </div>
 
         {# Right Side #}
@@ -76,9 +82,10 @@ module.exports = React.createClass
               <ErrorPanel title='Request Error!'
                 errorText={browser.response.error}/>
             when browser.response?
-              <ResponseInfo response={browser.response}/>
-          }
+              <ResponseInfo response={browser.response}/>}
         </div>
 
       </div>
     </div>
+
+ResultPanel = ({currentRequest, response} = @props)->

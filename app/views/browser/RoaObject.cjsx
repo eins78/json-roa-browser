@@ -4,9 +4,10 @@ app = require('ampersand-app')
 Button = require('react-bootstrap/lib/Button')
 ButtonGroup = require('react-bootstrap/lib/ButtonGroup')
 ListGroup = require('react-bootstrap/lib/ListGroup')
+ListGroupItem = require('../lib/ListGroupItem')
 f = require('active-lodash')
 deco = require('../lib/decorators')
-Icon = require('../icon')
+Icon = require('../lib/Icon')
 isLocalClick = require('../../lib/local-clicks')
 libUrl = require('url')
 uriTemplates = require('../../lib/uri-templates')
@@ -159,10 +160,3 @@ MethodButtons = React.createClass
         </Button>
       }
     </ButtonGroup>
-
-
-ListGroupItem = ({header, children} = @props)->
-  <div className='list-group-item'>
-    <h4 className='list-group-item-heading'>{header}</h4>
-    {children}
-  </div>
