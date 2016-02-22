@@ -73,7 +73,7 @@
     "typopro-web": "^3.4.2",
     "url-loader": "^0.5.7",
     "webdriverio": "^4.0.1",
-    "webpack": "^1.12.9",
+    "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.0"
   }
 }
