@@ -51,7 +51,8 @@ module.exports = React.createClass
       }
 
       {# Main Browser UI #}
-      <div className='app--browser container-fluid row'>
+      <div className='app--browser container-fluid'>
+      <div className='row'>
 
         {# Left Side #}
         <div className='col-sm-7'>
@@ -86,6 +87,5 @@ module.exports = React.createClass
         </div>
 
       </div>
+      </div>
     </div>
-
-ResultPanel = ({currentRequest, response} = @props)->
