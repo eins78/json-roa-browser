@@ -1,15 +1,30 @@
-var autoPrefixer = require('autoprefixer')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const resolvePath = require('path').resolve
+const autoPrefixer = require('autoprefixer')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PKG = require('./package.json')
 
+const outputConfig = {
+  path: resolvePath(__dirname, 'build', 'assets'),
+  publicPath: './assets/',
+  filename: '[name].[hash].js',
+  hash: true
+}
+
+const htmlPluginConfig = {
+  title: 'JSON-ROA Browser v' + PKG.version,
+  template: 'app/index.html',
+  filename: '../index.html',
+  inject: 'body',
+  minify: {}
+}
+
+// the boring stuff
 module.exports = {
-  entry: './app/index',
-  output: {
-    path: __dirname + '/build/',
-    filename: 'app.js',
-    // cssFilename: 'app.css',
-    hash: true
-    // publicPath: '/'
+  context: __dirname,
+  entry: {
+    app: './app/app'
   },
+  output: outputConfig,
   resolve: {
     // we can leave off file extensions for js-like sources:
     // still need to transform them with a loader!
@@ -35,11 +50,11 @@ module.exports = {
       // plain files: url-encode if small enough or passthrough
       {
         test: /\.(otf|eot|svg|ttf|woff)/,
-        loader: 'url-loader?limit=10000'
+        loader: 'url-loader?limit=128'
       },
       {
         test: /\.(jpe?g|png|gif)/,
-        loader: 'url-loader?limit=10000'
+        loader: 'url-loader?limit=128'
       },
 
       // js dialects are just transformed:
@@ -65,17 +80,6 @@ module.exports = {
 
   plugins: [
     // generate a simple index.html referencing all entries
-    new HtmlWebpackPlugin({
-      title: 'JSON-ROA Browser',
-      template: 'node_modules/html-webpack-template/index.ejs',
-      mobile: true
-      // devServer: 8080,
-      // appMountId: 'app',
-      // window: {
-      //   env: {
-      //     apiHost: 'http://example.com/api/v1'
-      //   }
-      // }
-    })
+    new HtmlWebpackPlugin(htmlPluginConfig)
   ]
 }

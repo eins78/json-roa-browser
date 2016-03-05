@@ -10,10 +10,9 @@ Browser = require('./models/browser')
 # add css to output:
 require('./styles.less')
 
-# NOTE: React warns against direct redendering into `document.body`,
-#       so create an app container:
-document.body.innerHTML = '<div id="app"></div>'
-container = document.getElementById('app')
+# NOTE: React warns against direct redendering into `document.body`
+container = document.getElementsByTagName('app')[0]
+throw new Error('No <app> mountpoint found!') if not container
 
 app.extend
   DEFAULTS: # TODO: make configurable

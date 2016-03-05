@@ -2,7 +2,7 @@
 
 ![status: beta](https://img.shields.io/badge/status-beta-orange.svg)
 
-## Features:
+## Features
 
 - Request Configuration
   - set Headers and URL to `HTTP GET` JSON-ROA enabled resources
@@ -29,6 +29,7 @@
     - [x] **support templated urls**
 - [x] requestconfig: resolve against current host (dont expand `/` into full url)
 - [ ] response: body: "Content Iframe (uses browser accept header!)"
+- [ ] sort headers by key (alphanumeric desc)
 
 #### "Issue Request" ActionForm
 

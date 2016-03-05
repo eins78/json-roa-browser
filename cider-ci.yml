@@ -25,7 +25,7 @@ jobs:
             build:
               name: 'Build'
               start-when: [script: npm-install]
-              body: npm run -s build && tar -czf build.tgz build/*
+              body: npm run -s ci:build | cat > buildlog.json && tar -czf build.tgz build/*
             filesize:
               name: 'Is the app filesize less than 1MB? (gzipped)'
               start-when: [script: build]
@@ -34,8 +34,10 @@ jobs:
                 var size = require("fs").statSync("./build.tgz").size
                 console.log((size/1024).toFixed(2)+"K")
                 if (size > 1024 * 1024) process.exit(1)
-          # tree-attachments:
-          #   build: { content-type: application/gzip, include-match: build.tgz }
+          tree-attachments:
+            build: { content-type: application/gzip, include-match: build.tgz }
+          trial-attachments:
+            buildlog: { content-type: application/json, include-match: buildlog.json }
 
         model:
           name: 'Model/Unit Tests'
@@ -47,6 +49,6 @@ jobs:
             format-tap:
               body: 'cat spec/log.txt | npm run -s tap-spec -- --color | npm run -s coffee spec/_format-summary.coffee > spec/log.html'
               start-when: [script: model-tests]
-          # trial-attachments:
-          #   logs_txt: { content-type: text/plain, include-match: spec/log*.txt }
-          #   logs_html: { content-type: text/html, include-match: spec/log*.html }
+          trial-attachments:
+            logs_txt: { content-type: text/plain, include-match: spec/log*.txt }
+            logs_html: { content-type: text/html, include-match: spec/log*.html }
