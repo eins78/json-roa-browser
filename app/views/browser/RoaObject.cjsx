@@ -97,7 +97,7 @@ RoaRelationList = React.createClass
 # 1 row for each Relation in section
 RoaRelationListItem = React.createClass
   render: ({relation, baseUrl} = @props)->
-    showKey = false
+    showKey = true
 
     <tr className='relation-row'>
       {showKey && <td className='col-sm-2'>
