@@ -27,7 +27,8 @@ module.exports = React.createClass
             text={response.headersText} dataObj={response.headers}/>
 
         {if response.isJSON
-          <DataPanel title='JSON Data' dataObj={response.jsonRaw}/>}
+          <DataPanel title='JSON Data' dataObj={response.jsonRaw}
+            initialOpen={true} initialExpanded={true}/>}
 
         {if response.jsonRoaRaw?
           <DataPanel title='JSON-ROA Data' dataObj={response.jsonRoaRaw}/>}

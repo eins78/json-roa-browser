@@ -1,4 +1,5 @@
 React = require('react')
+f = require('active-lodash')
 stringify = require('json-stringify-pretty-compact')
 Btn = require('react-bootstrap/lib/Button')
 Icon = require('./Icon')
@@ -11,25 +12,22 @@ module.exports = React.createClass
     title: React.PropTypes.node.isRequired
     text: React.PropTypes.string
     dataObj: React.PropTypes.object
-    defaultOpen: React.PropTypes.bool
+    initialOpen: React.PropTypes.bool
+    initialExpanded: React.PropTypes.bool
 
-  getInitialState: ()-> { open: null, expanded: false }
+  getInitialState: ()-> {
+    open: f.presence(@props.initialOpen) or false,
+    expanded: f.presence(@props.initialExpanded) or false
+  }
+  hasContent: ()-> (@props.text? or @props.dataObj? or @props.children?)
   onOpenClick: ()-> @setState(open: true)
   onCloseClick: ()-> @setState(open: false)
   onExpandClick: ()-> @setState(expanded: true)
   onCollapseClick: ()-> @setState(expanded: false)
 
   render: ()->
-    {id, title, text, dataObj, defaultOpen, children} = @props
+    {id, title, text, dataObj, initialOpen, children} = @props
     {open, expanded} = @state
-    defaultOpen ||= true
-
-    # panel is open according to state, or,
-    # if not set, then if data is present and props defaultOpen is not false
-    open = if open?
-      open # state
-    else
-      defaultOpen and (text? or dataObj? or children?)
 
     # if no text given, stringify data
     text ||= if dataObj? then (try stringify(dataObj, maxLength: WIDTH))
@@ -38,6 +36,8 @@ module.exports = React.createClass
     exandable = (text.split('\n').length > 20)
 
     itemClass = if open then '' else ' item-closed'
+    itemheadingClass = 'list-group-item-heading' + (
+      if @hasContent() then '' else ' text-muted')
     preClass = if expanded then '' else 'pre-scrollable'
 
     openToggle = if open
@@ -55,7 +55,7 @@ module.exports = React.createClass
 
 
     <li id={id} className={'list-group-item ' + itemClass}>
-      <div className='list-group-item-heading'>
+      <div className={itemheadingClass}>
         <span onClick={open && @onCloseClick || @onOpenClick}>{title}</span>
         <div className="btn-group btn-group-xs pull-right" role="group">
           {expandToggle}
