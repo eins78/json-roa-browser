@@ -57,20 +57,17 @@ module.exports = React.createClass
         {# Left Side #}
         <div className='col-sm-7'>
 
-          {# Request Cofig Panel #}
+          {# Request Config Panel #}
           <RequestConfig
             config={browser.requestConfig}
             onSubmit={@onRequestSubmit}
             onClear={@onClear}
             onConfigChange={@onRequestConfigChange}/>
 
-          {# ROA Result: Error or RoaObject or nothing #}
-          {switch
-            when (roaObject = browser.response?.roaObject)?
-              <RoaObject roaObject={roaObject} onMethodSubmit={@onMethodSubmit}/>
-            when (roaError = browser.response?.roaError)?
-              <ErrorPanel title="ROA Error!"
-                errorText={roaError}/>}
+          {# Main Section #}
+          {if (response = browser.response)
+            <ResponseDeco response={response}/>}
+
         </div>
 
         {# Right Side #}
@@ -81,7 +78,7 @@ module.exports = React.createClass
               <RunningPanel request={browser.currentRequest}/>
             when browser.response?.error?
               <ErrorPanel title='Request Error!'
-                errorText={browser.response.error}/>
+                message={browser.response.error}/>
             when browser.response?
               <ResponseInfo response={browser.response}/>}
         </div>
@@ -89,3 +86,20 @@ module.exports = React.createClass
       </div>
       </div>
     </div>
+
+
+ResponseDeco = ({response} = @props)->
+  # Result: Error or RoaObject or notSupportedMessage or AppError
+  AppError = <ErrorPanel title="App Error!" message="This is a bug!"/>
+  switch
+    when not f.present(response)
+      AppError
+    when (roaObject = response.roaObject)?
+      <RoaObject roaObject={roaObject}/>
+    when (roaError = response.roaError)?
+      <ErrorPanel title="ROA Error!" message={roaError}/>
+    when response && !response.isHandledByApp
+      <ErrorPanel title="Unsupported Response!" level='warn'
+        message="The response is not supported by this application."/>
+    else
+      AppError

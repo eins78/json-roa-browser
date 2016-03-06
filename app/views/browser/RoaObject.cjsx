@@ -129,8 +129,6 @@ MethodButtons = React.createClass
     # sort methods like the order defined in styleMap (extra keys at the end)
     methods = deco.sortMethods(methods)
 
-    onMethodSubmit = @props.onMethodSubmit
-
     <ButtonGroup bsSize='xs'>
       {f.map methods, (obj, method)->
         bsStyle = deco.methodNameToBootstrapeLevel(method)

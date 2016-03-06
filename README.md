@@ -29,7 +29,8 @@
     - [x] **support templated urls**
 - [x] requestconfig: resolve against current host (dont expand `/` into full url)
 - [ ] response: body: "Content Iframe (uses browser accept header!)"
-- [ ] sort headers by key (alphanumeric desc)
+- [ ] show (welcome) message when no request/response (yet)
+- [ ] sort headers by key (alphanumeric desc)?
 
 #### "Issue Request" ActionForm
 

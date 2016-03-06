@@ -11,6 +11,8 @@ module.exports = React.createClass
     level = if response.statusCode < 400 then 'success' else 'danger'
     panelClass = "panel panel-#{level}"
     labelClass = "label label-#{level}"
+    # if we can't decorate the response, always show the headers:
+    showHeadersPanelOpen = !response.isHandledByApp
 
     <div className={panelClass}>
 
@@ -24,13 +26,14 @@ module.exports = React.createClass
       <ul className="list-group">
         <DataPanel title='Request Config' dataObj={response.requestConfig}/>
         <DataPanel title='Headers'
-            text={response.headersText} dataObj={response.headers}/>
+            text={response.headersText} dataObj={response.headers}
+            initialOpen={showHeadersPanelOpen}/>
 
         {if response.isJSON
           <DataPanel title='JSON Data' dataObj={response.jsonRaw}
             initialOpen={true} initialExpanded={true}/>}
 
-        {if response.jsonRoaRaw?
+        {if response.jsonRoaRaw? # always show, independent of (ROA-)errors!
           <DataPanel title='JSON-ROA Data' dataObj={response.jsonRoaRaw}/>}
 
       </ul>

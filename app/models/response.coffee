@@ -76,6 +76,8 @@ module.exports = Model.extend
       deps: ['mediaType']
       fn: ()-> (@mediaType.subtype is 'json') or (@mediaType.suffix is 'json')
 
+    isHandledByApp: {deps: ['isJSON'], fn: ()-> @isJSON}
+
     jsonBody:
       deps: ['body', 'isJSON']
       fn: ()-> if @isJSON then @body
