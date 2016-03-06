@@ -30,6 +30,7 @@
 - [x] requestconfig: resolve against current host (dont expand `/` into full url)
 - [ ] response: body: "Content Iframe (uses browser accept header!)"
 - [ ] show (welcome) message when no request/response (yet)
+- [ ] active submit button in actionfor modal init
 - [ ] sort headers by key (alphanumeric desc)?
 
 #### "Issue Request" ActionForm
@@ -39,6 +40,7 @@
   - [ ] build a form for the variables
 - [x] when body possible* -> ask for body, content-type
   - [x] * method is not GET or DELETE
+- [ ] confirm closing of modal if data in state
 - [ ] save full url config to RequestConfig (template + vars)
     - [ ] move request/template handling to model
     - [ ] allow edit from main form

@@ -16,7 +16,7 @@
     "ci:build": "webpack -p --json --no-color",
     "dist:madek": "NPMVERSION=$(node -p 'require(\"./package.json\").version') ; GITHASH=$(git log -n1 --format=\"%h\") ; VERSION=\"v${NPMVERSION}+g${GITHASH}\" ; npm run -s build && rsync -rv build/ tmp/dist-madek/ && cd tmp/dist-madek && git add . && git commit -m \"build for $VERSION\" && git push origin HEAD:refs/heads/$VERSION ; cd ../..",
     "predist:madek": "rm -rf tmp/dist-madek && mkdir -p tmp && git clone --depth=1 git@github.com:Madek/madek_api-browser_build.git tmp/dist-madek",
-    "deploy-178": "npm run build && rsync -avPh --delete build/*.* mt:domains/dev.178.is/html/json-roa-browser/",
+    "deploy:178": "npm run build && rsync -avPh --delete build/*{,.*} mt:domains/dev.178.is/html/json-roa-browser/",
     "tap-spec": "tap-spec",
     "coffee": "coffee",
     "selenium-standalone": "selenium-standalone"
@@ -36,6 +36,7 @@
     "ampersand-state": "^5.0.0",
     "bootstrap": "^3.3.6",
     "classnames": "^2.2.3",
+    "codemirror": "^5.12.0",
     "hashchange": "^1.0.0",
     "json-stringify-pretty-compact": "^1.0.1",
     "media-typer": "^0.3.0",
@@ -45,6 +46,7 @@
     "qs": "^6.1.0",
     "react": "^0.14.6",
     "react-bootstrap": "^0.28.3",
+    "react-codemirror": "^0.2.5",
     "react-dom": "^0.14.6",
     "semver": "^5.1.0",
     "uri-templates": "^0.1.9"

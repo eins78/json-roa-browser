@@ -18,6 +18,9 @@ f = require('active-lodash')
 deco = require('../lib/decorators')
 uriTemplates = require('../../lib/uri-templates')
 
+fancyEditor = true
+DataInput = require('../lib/DataInput')
+
 module.exports = React.createClass
   displayName: 'ActionForm'
   propTypes:
@@ -98,16 +101,28 @@ module.exports = React.createClass
               Values of <code>null</code> will remove the corresponding parameter.
             </span>
 
-            <Input ref='urlVars'
-              type='textarea'
-              value={urlVars}
-              label='Templated URL Expansion Variables'
-              placeholder='JSON DATA'
-              help={helpText}
-              bsStyle={deco.validationStateJSON(urlVars)}
-              ariaInvalid={not url}
-              rows={urlVars.split('\n').length}
-              onChange={@handleChange} />}
+            if fancyEditor
+              # no type=textarea, but custom children!
+              <Input
+                label='Templated URL Expansion Variables'
+                help={helpText}
+                bsStyle={deco.validationStateJSON(urlVars)}
+                ariaInvalid={not url}>
+                <DataInput
+                  ref='urlVars'
+                  value={urlVars}
+                  onChange={@handleChange}/>
+              </Input>
+            else
+              <Input ref='urlVars'
+                type='textarea'
+                label='Templated URL Expansion Variables'
+                placeholder='JSON DATA'
+                help={helpText}
+                bsStyle={deco.validationStateJSON(urlVars)}
+                ariaInvalid={not url}
+                rows={urlVars.split('\n').length}
+                onChange={@handleChange} />}
 
           {# Body (JSON) }
           {if not f.includes(['get', 'delete'], method)
