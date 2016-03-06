@@ -1,4 +1,5 @@
 React = require('react')
+classList = require('classnames')
 f = require('active-lodash')
 stringify = require('json-stringify-pretty-compact')
 Btn = require('react-bootstrap/lib/Button')
@@ -35,10 +36,10 @@ module.exports = React.createClass
 
     exandable = (text.split('\n').length > 20)
 
-    itemClass = if open then '' else ' item-closed'
-    itemheadingClass = 'list-group-item-heading' + (
-      if @hasContent() then '' else ' text-muted')
-    preClass = if expanded then '' else 'pre-scrollable'
+    itemClass = classList('list-group-item', {'item-closed': open})
+    preClass = classList('source-code small', {'pre-scrollable': expanded})
+    itemheadingClass = classList('list-group-item-heading',
+      {'text-muted': !@hasContent()})
 
     openToggle = if open
       <Btn title='close' onClick={@onCloseClick}><Icon icon='chevron-up'/></Btn>
@@ -54,7 +55,7 @@ module.exports = React.createClass
           <Icon icon='expand'/></Btn>
 
 
-    <li id={id} className={'list-group-item ' + itemClass}>
+    <li id={id} className={itemClass}>
       <div className={itemheadingClass}>
         <span onClick={open && @onCloseClick || @onOpenClick}>{title}</span>
         <div className="btn-group btn-group-xs pull-right" role="group">
@@ -64,6 +65,6 @@ module.exports = React.createClass
       {if open
         <div className='list-group-item-body'>
           {children if children?}
-          <pre id={id} className={'source-code small ' + preClass}>{text}</pre>
+          <pre id={id} className={preClass}>{text}</pre>
           </div>}
     </li>

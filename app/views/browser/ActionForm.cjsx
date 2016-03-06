@@ -8,6 +8,7 @@ renders a modal form to issue a (non-GET) ROA request
 ###
 
 React = require('react')
+css = require('classnames')
 Button = require('react-bootstrap/lib/Button')
 ButtonGroup = require('react-bootstrap/lib/ButtonGroup')
 Input = require('react-bootstrap/lib/Input')
@@ -122,7 +123,7 @@ module.exports = React.createClass
               onChange={@handleChange} />}
 
           {# URL (readonly) }
-          <div className="form-group form-group-sm #{if not url then 'has-error'}">
+          <div className={css('form-group form-group-sm', 'has-error': !url)}>
             <label className='control-label'>
               {if url then 'URL' else 'URL (templated)'}</label>
             <input type='text' className='form-control'
