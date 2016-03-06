@@ -1,6 +1,6 @@
 {
   "name": "json-roa-browser",
-  "version": "2.0.0-alpha.0+madek3",
+  "version": "2.0.0-alpha.1+madek3",
   "description": "JSON-ROA browser",
   "scripts": {
     "test": "npm run model-tests",
