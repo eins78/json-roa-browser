@@ -30,7 +30,6 @@ run-selenium:
     npm run selenium-standalone -- start -- -port ${CI_SELENIUM_PORT}
   ignore-state: true # we don't care about the exit status
   start-when:
-    - script: npm-install
     - script: start-xvnc
   terminate-when:
     - script: shutdown

@@ -1,6 +1,5 @@
 scripts:
   _cider-ci_include:
-    - 'cider-ci/defaults/scripts/install-dependencies.yml'
     - 'cider-ci/defaults/scripts/manage-database.yml'
     - 'cider-ci/defaults/scripts/manage-xvnc.yml'
     - 'cider-ci/defaults/scripts/run-services.yml'
