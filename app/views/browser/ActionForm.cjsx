@@ -93,13 +93,13 @@ module.exports = React.createClass
           {# URL vars (JSON) }
           {if templatedUrl then do ()=>
             urlVars = @getFormValue('urlVars')
-            helpText = <span>
+            helpText = <p>
               The request URL is templated, see <a
                 href='http://tools.ietf.org/html/rfc6570'>
                 RFC6570 URI Template</a>.
               The parameters can be submitted via the above JSON data.
               Values of <code>null</code> will remove the corresponding parameter.
-            </span>
+            </p>
 
             if fancyEditor
               # no type=textarea, but custom children!

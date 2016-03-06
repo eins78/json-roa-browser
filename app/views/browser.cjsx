@@ -65,13 +65,17 @@ module.exports = React.createClass
             onConfigChange={@onRequestConfigChange}/>
 
           {# Main Section #}
-          {if (response = browser.response)
-            <ResponseDeco response={response}/>}
+          <div role='main'>
+            <h2 className='sr-only'>Response Body</h2>
+            {if (response = browser.response)
+              <ResponseDeco response={response}/>}
+          </div>
 
         </div>
 
         {# Right Side #}
-        <div className='col-sm-5'>
+        <div className='col-sm-5' role='main'>
+          <h2 className='sr-only'>Debug Information</h2>
           {# Result: Running, Error or ResponseInfo #}
           {switch
             when browser.currentRequest?

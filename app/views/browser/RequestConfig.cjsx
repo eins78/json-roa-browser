@@ -29,12 +29,12 @@ module.exports = React.createClass
 
     <div className='panel panel-default'>
       <div className='panel-heading'>
-        <h3><Icon icon='server'/> Request
+        <h2 className='h3'><Icon icon='server'/> Request
           <BtnGroup bsSize='xs' className='pull-right'>
             <Btn title='reset' onClick={@onClearClick}>
               <Icon icon='trash'/></Btn>
           </BtnGroup>
-        </h3>
+        </h2>
       </div>
 
       <form role="form" onSubmit={@onSubmit}>
