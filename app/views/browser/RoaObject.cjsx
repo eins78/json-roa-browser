@@ -100,11 +100,11 @@ RoaRelationListItem = React.createClass
     showKey = true
 
     <tr className='relation-row' data-relation-name={relation.keyName}>
-      {showKey && <td className='col-sm-2'>
-        <samp><strong><small>{relation.keyName}</small></strong></samp></td>}
-      <td className='title col-sm-2'>
+      {showKey && <td className='col-sm-3'>
+        {relation.keyName}</td>}
+      <td className='title col-sm-4'>
         <span  title={relation.keyName}>{relation.title}</span></td>
-      <td className='meta-relations col-sm-4'>
+      <td className='meta-relations col-sm-3'>
         <ul className='list-inline list-unstyled'>
           {relation.roaRelations.map (metaRel)->
             <li key={metaRel.getId()}>
@@ -143,6 +143,7 @@ MethodButtons = React.createClass
           # build a valid link, but intercept "local" clicks (new tabs work!)
           href = libUrl.resolve(baseUrl, url)
           onClick = (event, config) -> localLinkHelper(event, href)
+          icon = <Icon icon='link fa-rotate-90'/>
         else
           icon = <Icon icon='pencil-square'/>
           onClick = (event)->
