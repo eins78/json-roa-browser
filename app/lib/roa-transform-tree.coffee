@@ -12,7 +12,7 @@ module.exports = (data)->
     roaCollection: transformRoaRelationsFrom(data?.collection)
     'self-relation': undefined
     roaSelfRelation: if (selfRel=data?['self-relation'])?
-      f.set(transformRoaRelationsFrom(selfRel), 'keyName', 'roaSelfRelation')
+      f.set(transformRoaRelationsFrom(selfRel), 'keyName', 'self-relation')
 
 transformRoaRelations = (relations)-> # recurses
   hashToArrayWithKey(relations).map (item)->
