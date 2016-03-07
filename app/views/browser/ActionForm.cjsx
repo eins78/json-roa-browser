@@ -148,7 +148,7 @@ module.exports = React.createClass
           </div>
 
           {# Content-Type (Text) }
-          {if method isnt 'delete'
+          {if not ((method is 'get') or (method is 'delete'))
             <Input ref='contentType'
               label='Content-Type'
               type='text'
