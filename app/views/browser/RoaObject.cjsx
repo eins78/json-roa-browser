@@ -31,6 +31,11 @@ module.exports = React.createClass
 
   render: ()->
     roa = @props.roaObject
+    selfRel = roa.get('roaSelfRelation')
+    relations = roa.get('roaRelations')
+    collection = roa.get('roaCollection')
+    allEmpty = (!(selfRel.getId()?) &&
+      !(relations?.length > 0) && !(collection?.roaRelations.length > 0))
 
     <div className='panel panel-info'>
       <div className='panel-heading'>
@@ -38,9 +43,13 @@ module.exports = React.createClass
       </div>
 
       <ListGroup componentClass='div'>
-        <RoaSelfRelation selfRelation={roa.get('roaSelfRelation')} url={roa.baseUrl}/>
-        <RoaCollection collection={roa.get('roaCollection')} url={roa.baseUrl}/>
-        <RoaRelations relations={roa.get('roaRelations')} url={roa.baseUrl}/>
+        {if allEmpty
+          <ListGroupItem header='No Relations'/>}
+
+        <RoaSelfRelation selfRelation={selfRel} url={roa.baseUrl}/>
+        <RoaCollection collection={collection} url={roa.baseUrl}/>
+        <RoaRelations relations={relations} url={roa.baseUrl}/>
+
       </ListGroup>
 
     </div>
@@ -72,9 +81,10 @@ RoaCollection = React.createClass
 
 RoaRelations = React.createClass
   render: ()->
-    return null unless (relations = @props.relations)?
+    {relations, url} = @props
+    return null if !(relations?.length > 0)
     <ListGroupItem header='Relations'>
-      <RoaRelationList url={@props.url} relations={relations}/>
+      <RoaRelationList url={url} relations={relations}/>
     </ListGroupItem>
 
 # partials
