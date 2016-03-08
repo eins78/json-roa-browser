@@ -9,7 +9,7 @@ module.exports = React.createClass
   updateClock: ()->
     @setState(runningTime: ((new Date().getTime()) - @props.request.started))
   componentWillUnmount: ()->
-    clearInterval(@clock);
+    clearInterval(@clock)
   render: ()->
     <div className='panel panel-warning'>
       <div className='panel-heading'>

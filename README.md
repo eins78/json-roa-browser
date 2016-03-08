@@ -28,10 +28,15 @@
     - [x] build dynamic form from needed data
     - [x] **support templated urls**
 - [x] requestconfig: resolve against current host (dont expand `/` into full url)
+- [ ] debounce everything listening on keyboard input
 - [ ] response: body: "Content Iframe (uses browser accept header!)"
 - [ ] show (welcome) message when no request/response (yet)
-- [ ] active submit button in actionfor modal init
+- [ ] activcate submit button on action form modal init
 - [ ] sort headers by key (alphanumeric desc)?
+- [ ] verbose mode show table headers, hints, …
+- [ ] `lib/codemirror-base`, make `DataOutput` component ([simple, see runmode](http://codemirror.net/doc/manual.html#addons))
+- [ ] dark mode!
+- [ ] collect resources in graph viewer
 
 #### "Issue Request" ActionForm
 
