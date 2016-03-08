@@ -16,10 +16,15 @@ container = document.getElementsByTagName('app')[0]
 throw new Error('No <app> mountpoint found!') if not container
 
 app.extend
+  VERSION: PKG.version
   DEFAULTS: # TODO: make configurable
-    version: PKG.version
-    strings:
-      appTitle: 'JSON-ROA Hypermedia API Browser'
+    appName: 'Madek API Browser'
+    topNav: [
+      {
+        title: 'About'
+        url: 'http://github.com/eins78/json-roa-browser/'
+      }
+    ]
     formAction:
       contentType: 'application/json; charset=UTF-8'
       body: '{\n  \n}'
