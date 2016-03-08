@@ -21,6 +21,11 @@ uriTemplates = require('../../lib/uri-templates')
 fancyEditor = true
 DataInput = require('../lib/DataInput')
 
+parseUrlParamsForm = (formValue, nesting = false)->
+  f.mapValues((try JSON.parse(formValue)), (value, key)->
+    return value if (!value or nesting)
+    ((try JSON.stringify(value)) or value))
+
 module.exports = React.createClass
   displayName: 'ActionForm'
   propTypes:
@@ -58,7 +63,7 @@ module.exports = React.createClass
     # TMP: build url here… (moves to model)
     if @props.templatedUrl
       return if changed.formData.urlVars is @state.formData.urlVars
-      filled = (try JSON.parse(changed.formData.urlVars))
+      filled = parseUrlParamsForm(changed.formData.urlVars)
       changed.url = uriTemplates(@props.templatedUrl).fill(filled or {})
 
     @setState(f.merge(@state, changed))
@@ -99,6 +104,7 @@ module.exports = React.createClass
                 RFC6570 URI Template</a>.
               The parameters can be submitted via the above JSON data.
               Values of <code>null</code> will remove the corresponding parameter.
+              Non-simple values (<code>{'{}'}</code>, <code>[]</code>) are stringfied.
             </p>
 
             if fancyEditor
