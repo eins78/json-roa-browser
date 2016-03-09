@@ -16,7 +16,6 @@ module.exports = React.createClass
 
       <nav className="navbar navbar-default navbar-static-top">
       <div className="container-fluid">
-      <div classname="navbar-header">
 
         <h1 className="navbar-brand">{app.DEFAULTS.appName} <small>
           {app.VERSION}</small>
@@ -27,7 +26,7 @@ module.exports = React.createClass
             key = ''+item.title+item.url
             <li key={key}><a href={item.url} className="navbar-link">
               {item.title}</a></li>}</ul>
-      </div>
+
       </div>
       </nav>
 

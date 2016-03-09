@@ -21,10 +21,9 @@ uriTemplates = require('../../lib/uri-templates')
 fancyEditor = true
 DataInput = require('../lib/DataInput')
 
-parseUrlParamsForm = (formValue, nesting = false)->
-  f.mapValues((try JSON.parse(formValue)), (value, key)->
-    return value if (!value or nesting)
-    ((try JSON.stringify(value)) or value))
+parseUrlParamsForm = (hash)->
+  f.mapValues hash, (value)->
+    if (f.isObject(value)) then JSON.stringify(value) else value
 
 module.exports = React.createClass
   displayName: 'ActionForm'
@@ -63,7 +62,7 @@ module.exports = React.createClass
     # TMP: build url here… (moves to model)
     if @props.templatedUrl
       return if changed.formData.urlVars is @state.formData.urlVars
-      filled = parseUrlParamsForm(changed.formData.urlVars)
+      filled = parseUrlParamsForm((try JSON.parse(changed.formData.urlVars)))
       changed.url = uriTemplates(@props.templatedUrl).fill(filled or {})
 
     @setState(f.merge(@state, changed))
