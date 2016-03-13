@@ -43,16 +43,13 @@ module.exports = React.createClass
 
   getInitialState: ()->
     url: (if (url = @props.templatedUrl) then uriTemplates(url).fill({}))
-    formData: f.defaults @props.defaults, {
-      urlVars: (if (url = @props.templatedUrl)
-        obj = f.object(f.map(uriTemplates(url).varNames, (k)-> [k, null]))
-        JSON.stringify(obj, 0, 2)) }
+    formData: f.defaults @props.defaults,
+      urlVars: JSON.stringify(@requestConfig.templatedUrlVarsPreset, 0, 2)
 
+  # NOTE: This could also be done using ReactLink: <http://facebook.github.io/react/docs/two-way-binding-helpers.html>
   getFormValue: (key)->
     f.get(@state, ['formData', key]) or f.get(@props, ['defaults', key])
-
   handleChange: ()->
-    # NOTE: This could also be done using ReactLink: <http://facebook.github.io/react/docs/two-way-binding-helpers.html>
     changed =
       formData:
         contentType: f.presence @refs.contentType?.getValue()
