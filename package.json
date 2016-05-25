@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "active-lodash": "^1.2.2",
-    "ampersand-app": "^1.0.4",
+    "ampersand-app": "^2.0.0",
     "ampersand-collection": "^1.6.1",
     "ampersand-model": "^6.0.2",
     "ampersand-react-mixin": "^1.0.1",
