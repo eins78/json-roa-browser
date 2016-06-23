@@ -48,7 +48,7 @@
     "react-bootstrap": "^0.28.3",
     "react-codemirror": "^0.2.5",
     "react-dom": "^0.14.6",
-    "semver": "^5.1.0",
+    "semver": "^5.1.1",
     "uri-templates": "^0.1.9"
   },
   "devDependencies": {
