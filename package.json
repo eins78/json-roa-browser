@@ -36,7 +36,7 @@
     "ampersand-state": "^5.0.0",
     "bootstrap": "^3.3.6",
     "classnames": "^2.2.3",
-    "codemirror": "^5.12.0",
+    "codemirror": "^5.17.0",
     "hashchange": "^1.0.0",
     "json-stringify-pretty-compact": "^1.0.1",
     "media-typer": "^0.3.0",
