@@ -34,7 +34,7 @@
     "ampersand-model": "^6.0.2",
     "ampersand-react-mixin": "^1.0.1",
     "ampersand-state": "^5.0.0",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "^3.3.7",
     "classnames": "^2.2.3",
     "codemirror": "^5.12.0",
     "hashchange": "^1.0.0",
