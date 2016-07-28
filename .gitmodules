@@ -1,5 +1,5 @@
-[submodule "spec/demo-app"]
-	path = spec/demo-app
+[submodule "tests/demo-app"]
+	path = tests/demo-app
 	url = https://github.com/json-roa/json-roa_demo-app
 [submodule "node_modules"]
 	path = node_modules
