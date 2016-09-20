@@ -44,7 +44,7 @@
     "node-status-codes": "^2.0.0",
     "parse-headers": "^2.0.1",
     "qs": "^6.1.0",
-    "react": "^0.14.6",
+    "react": "^15.3.2",
     "react-bootstrap": "^0.28.3",
     "react-codemirror": "^0.2.5",
     "react-dom": "^0.14.6",
