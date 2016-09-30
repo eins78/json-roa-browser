@@ -75,7 +75,7 @@
     "selenium-standalone": "^5.0.0",
     "style-loader": "^0.13.0",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.0",
+    "tape": "^4.6.1",
     "url-loader": "^0.5.7",
     "webdriverio": "^4.0.3",
     "webpack": "^1.12.14",
