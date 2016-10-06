@@ -63,8 +63,16 @@ module.exports = Model.extend
     @formAction = null
     @runRequest(config)
 
-  runRequest: (extraConfig)->
-    config = @requestConfig.combineWith(extraConfig)
+  runRequest: (extraConfig = {})->
+    config = f.chain(extraConfig)
+      .defaults(@requestConfig.serialize(),
+        method: 'GET')
+      .merge(
+        headers: (try parseHeaders(@requestConfig.headers))
+      ,
+        headers: (try parseHeaders(extraConfig.headers))
+        body: (try JSON.parse(extraConfig.body)))
+      .value()
 
     # reset current request
     @response = null
