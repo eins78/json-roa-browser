@@ -1,7 +1,5 @@
 import React from 'react'
 import ampersandReactMixin from 'ampersand-react-mixin'
-import Btn from 'react-bootstrap/lib/Button'
-import BtnGroup from 'react-bootstrap/lib/ButtonGroup'
 import Icon from '../lib/Icon'
 import f from 'active-lodash'
 
@@ -11,7 +9,8 @@ const RequestConfig = React.createClass({
   mixins: [ampersandReactMixin],
 
   defaultProps: {
-    onSubmit: () => {}
+    onSubmit: () => {},
+    onClear: () => {}
   },
 
   getInitialState () {
@@ -19,9 +18,9 @@ const RequestConfig = React.createClass({
   },
 
   // event handlers:
-  onClearClick: (_event) => this.props.onClear(),
+  onClearClick (_event) { this.props.onClear() },
 
-  updateConfigKey: (key, event) => {
+  updateConfigKey (key, event) {
     const value = event.target.value
     // set internal state so UI does not hang
     this.setState({formData: f.set(f.clone(this.state.formData), key, value)})
@@ -29,16 +28,17 @@ const RequestConfig = React.createClass({
     this.props.onConfigChange(key, value)
   },
 
-  onSubmit: (event) => this.props.onSubmit(event),
+  onSubmit (event) { this.props.onSubmit(event) },
 
-  render ({ conf } = this.props) {
+  render (conf = this.props.config) {
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
         <h2 className='h3'><Icon icon='server' /> Request
-          <BtnGroup bsSize='xs' className='pull-right'>
-            <Btn title='reset' onClick={this.onClearClick}>
-              <Icon icon='trash' /></Btn>
-          </BtnGroup>
+          <div className='btn-group btn-group-xs pull-right' role='group'>
+            <button className='btn'
+              title='reset' onClick={this.onClearClick}>
+              <Icon icon='trash' /></button>
+          </div>
         </h2>
       </div>
 

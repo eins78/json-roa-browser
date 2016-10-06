@@ -1,6 +1,7 @@
 Model = require('ampersand-state')
 f = require('active-lodash')
-uriTemplates = require('../../lib/uri-templates')
+parseHeaders = require('parse-headers')
+uriTemplates = require('../lib/uri-templates').default
 
 module.exports = Model.extend
   props:
@@ -19,7 +20,7 @@ module.exports = Model.extend
 
     templatedUrlVars: # each var is a key in a hash
       type: 'object'
-      default: {}
+      default: () -> ({})
 
 
   # combine internal config with extra config.

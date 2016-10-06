@@ -1,12 +1,20 @@
 React = require('react')
 ampersandReactMixin = require('ampersand-react-mixin')
 f = require('active-lodash')
-RequestConfig = require('./browser/RequestConfig')
-ResponseInfo = require('./browser/ResponseInspector')
-ErrorPanel = require('./browser/ErrorPanel')
-RunningPanel = require('./browser/RunningPanel')
-RoaObject = require('./browser/RoaObject')
-ActionForm = require('./browser/ActionForm')
+
+# RequestConfig = require('./browser/RequestConfig.cjsx')
+# ResponseInfo = require('./browser/ResponseInspector.cjsx')
+# ErrorPanel = require('./browser/ErrorPanel.cjsx')
+# RunningPanel = require('./browser/RunningPanel.cjsx')
+# RoaObject = require('./browser/RoaObject.cjsx')
+# ActionForm = require('./browser/ActionForm.cjsx')
+
+RequestConfig = require('./browser/RequestConfig.js').default
+ResponseInfo = require('./browser/ResponseInspector.js').default
+ErrorPanel = require('./browser/ErrorPanel.js').default
+RunningPanel = require('./browser/RunningPanel.js').default
+RoaObject = require('./browser/RoaObject.js').default
+ActionForm = require('./browser/ActionForm.js').default
 
 browserModel = require('../models/browser')
 

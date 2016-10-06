@@ -1,7 +1,6 @@
 # browser Model - browser.js
 Model = require('ampersand-state')
 app = require('ampersand-app')
-parseHeaders = require('parse-headers')
 hashchange = require('hashchange')
 urlQuery = require('qs')
 f = require('active-lodash')

@@ -65,14 +65,14 @@ export default RoaObject
 
 // partials
 
-const RoaSelfRelation = ({selfRelation}) => (
-  selfRelation && !selfRelation.getId() ? null : (
+const RoaSelfRelation = ({url, selfRelation}) => (
+  (!selfRelation || !selfRelation.getId()) ? <noscript /> : (
     <ListGroupItem header='Self'>
-      <RoaRelationList url={this.props.url} relations={[selfRelation]} />
+      <RoaRelationList url={url} relations={[selfRelation]} />
     </ListGroupItem>))
 
 const RoaCollection = ({collection}) => (
-  !(f.get(collection, 'roaRelations.length') > 0) ? null : (
+  !(f.get(collection, 'roaRelations.length') > 0) ? <noscript /> : (
     <ListGroupItem header='Collection'>
       <RoaRelationList url={this.props.url} relations={collection.roaRelations} />
       {((nextLink = collection.next.href) => nextLink &&
@@ -87,7 +87,7 @@ const RoaCollection = ({collection}) => (
     </ListGroupItem>))
 
 const RoaRelations = ({relations, url}) => (
-  !(f.get(relations, 'length') > 0) ? null : (
+  !(f.get(relations, 'length') > 0) ? <noscript /> : (
     <ListGroupItem header='Relations'>
       <RoaRelationList url={url} relations={relations} />
     </ListGroupItem>))
