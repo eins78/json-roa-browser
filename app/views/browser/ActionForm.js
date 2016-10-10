@@ -26,38 +26,48 @@ const parseUrlParamsForm = (hash) =>
     f.isObject(value) ? JSON.stringify(value) : value)
 
 class ActionForm extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
-    const url = this.props.templatedUrl
-    this.state = {
-      url: (url) ? uriTemplates(url).fill({}) : null,
-      formData: f.defaults(this.props.defaults,
-        {urlVars: JSON.stringify(this.requestConfig.templatedUrlVarsPreset, 0, 2)})
+    const tUrl = props.templatedUrl
+    this.state = (!tUrl) ? null : {
+      url: uriTemplates(tUrl).fill({}),
+      formData: {
+        urlVars: JSON.stringify( // NOTE: varNames -> ['foo'] -> {foo:null}
+          f.object(f.map(uriTemplates(tUrl).varNames, (k) => [k, null])),
+        0, 2)
+      }
     }
+
+    this.getFormValue = this.getFormValue.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.onClose = this.onClose.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+
+    // ;['getFormValue', 'handleChange', 'onClose', 'onSubmit']
+    //   .forEach((m) => this[m] = this[m].bind(this))
   }
 
   // NOTE: This could also be done using ReactLink: <http://facebook.github.io/react/docs/two-way-binding-helpers.html>
   getFormValue (key) {
-    f.get(this.state, ['formData', key]) || f.get(this.props, ['defaults', key])
+    return f.get(this.state, ['formData', key]) ||
+      f.get(this.props, ['defaults', key]) || ''
   }
+
   handleChange () {
     // NOTE: `getValue` comes either from react-bootstrap's <input>
     //       OR the codemirror wrapper (which mirrors the method)
     // TODO: just use the input value directly (if needed at all!)
-    function getVal (name) {
-      const getter = f.presence(f.get(this, ['refs', 'body', name, 'getValue']))
+    const getVal = (name) => {
+      const getter = f.presence(f.get(this, ['refs', name, 'getValue']))
       return f.isFunction(getter) ? getter() : null
     }
     const changed = {
-      formData: {
-        contentType: getVal('contentType'),
-        body: getVal('body'),
-        urlVars: getVal('urlVars')
-      }
+      formData: ['contentType', 'body', 'urlVars']
+        .reduce((o, key) => Object.assign(o, {[key]: getVal(key)}), {})
     }
 
-    // TMP: build url here… (moves to model)
+    // build the URL
     if (this.props.templatedUrl) {
       if (changed.formData.urlVars === this.state.formData.urlVars) return
       const parsed = (() => {
@@ -199,3 +209,5 @@ ActionForm.propTypes = {
 ActionForm.defaultProps = {
   onClose: () => {}
 }
+
+export default ActionForm

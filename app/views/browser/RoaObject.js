@@ -138,9 +138,9 @@ const MethodButtons = ({url, methods, baseUrl}) => {
       {f.map(methods, (obj, method) => {
         const bsStyle = deco.methodNameToBootstrapeLevel(method)
         // determine if it needs a form at all
-        const canBeLink = (method === 'get' && obj.templatedUrl)
+        const canBeLink = (method === 'get' && !obj.templatedUrl)
         // determine if it needs a form (url template or actions needs data)
-        // const needsFormInput = (method !== 'delete') // TODO
+        // const needsFormInput = (method !== 'delete') TODO: ?
 
         // TMP: dirty: actions here… move this to roa models…
         let href, onClick, icon
@@ -159,9 +159,11 @@ const MethodButtons = ({url, methods, baseUrl}) => {
               defaults: f.defaults(app.DEFAULTS.formAction)
             }})
         }
-        <Button href={href} onClick={onClick} bsStyle={bsStyle} key={method}>
-          {icon} <samp>{method.toUpperCase()}</samp>
-        </Button>
+        return (
+          <Button href={href} onClick={onClick} bsStyle={bsStyle} key={method}>
+            {icon} <samp>{method.toUpperCase()}</samp>
+          </Button>
+        )
       })}
     </ButtonGroup>
   )

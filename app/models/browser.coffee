@@ -3,6 +3,7 @@ Model = require('ampersand-state')
 app = require('ampersand-app')
 hashchange = require('hashchange')
 urlQuery = require('qs')
+parseHeaders = require('parse-headers')
 f = require('active-lodash')
 curl = require('../lib/curl')
 

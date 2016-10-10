@@ -1,5 +1,6 @@
 app = require('ampersand-app')
 React = require('react') # used indirectly (via JSX)
+window.React = React
 ReactDOM = require('react-dom')
 urlQuery = require('qs')
 hashchange = require('hashchange')

@@ -35,7 +35,7 @@ const RequestConfig = React.createClass({
       <div className='panel-heading'>
         <h2 className='h3'><Icon icon='server' /> Request
           <div className='btn-group btn-group-xs pull-right' role='group'>
-            <button className='btn'
+            <button className='btn btn-default'
               title='reset' onClick={this.onClearClick}>
               <Icon icon='trash' /></button>
           </div>
