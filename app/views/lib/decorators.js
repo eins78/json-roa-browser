@@ -12,12 +12,12 @@ const methodStyleMap = { // bootstrap levels
 
 f.mixin({
   // return object with keys sorted like word in array, extra keys at the end.
-  sortKeysLike: (obj, keys) => f(keys)
-    .map((k) => f(obj).get(k) && [ k, f(obj).get(k) ])
+  sortKeysLike: (obj, keys) => f.chain(keys)
+    .map((key) => f(obj).get(key) && [ key, f(obj).get(key) ])
     .filter().zipObject().merge(obj).value()
 }, {chain: false})
 
-export const methodNameToBootstrapeLevel = (method) => {
+export const methodNameToBootstrapLevel = (method) => {
   if (!f.isString(method)) throw TypeError
   return methodStyleMap[method.toLowerCase()] || methodStyleMap['_else']
 }

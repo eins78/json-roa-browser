@@ -1,7 +1,7 @@
 # roaResponse Model - roa-response.js
 Model = require('ampersand-state')
 mixinTypeSemver = require('../../lib/ampersand-state-mixin-datatype-semver')
-parseRoaTree = require('../../lib/roa-transform-tree')
+parseRoaTree = require('../../lib/roa-transform-tree').default
 
 RoaRelation = require('./roa-relation')
 RoaRelations = require('./roa-relations')

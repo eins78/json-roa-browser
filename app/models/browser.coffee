@@ -5,7 +5,7 @@ hashchange = require('hashchange')
 urlQuery = require('qs')
 parseHeaders = require('parse-headers')
 f = require('active-lodash')
-curl = require('../lib/curl')
+curl = require('../lib/curl').default
 
 RequestConfig = require('./request-config')
 Response = require('./response')

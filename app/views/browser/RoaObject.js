@@ -136,7 +136,7 @@ const MethodButtons = ({url, methods, baseUrl}) => {
   return (
     <ButtonGroup bsSize='xs'>
       {f.map(methods, (obj, method) => {
-        const bsStyle = deco.methodNameToBootstrapeLevel(method)
+        const bsStyle = deco.methodNameToBootstrapLevel(method)
         // determine if it needs a form at all
         const canBeLink = (method === 'get' && !obj.templatedUrl)
         // determine if it needs a form (url template or actions needs data)

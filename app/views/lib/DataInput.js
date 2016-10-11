@@ -11,7 +11,8 @@ class DataInput extends React.Component {
     this.getValue = this.getValue.bind(this)
   }
   getValue () {
-    return get(this, 'refs.editor.getCodeMirror.getValue')()
+    const editor = get(this, 'refs.editor.getCodeMirror')
+    return editor && editor().getValue()
   }
   render () {
     const {value, onChange, readOnly} = this.props

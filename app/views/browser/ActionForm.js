@@ -15,7 +15,7 @@ import Input from 'react-bootstrap/lib/Input'
 import Modal from 'react-bootstrap/lib/Modal'
 
 import f from 'active-lodash'
-import deco from '../lib/decorators'
+import * as deco from '../lib/decorators'
 import uriTemplates from '../../lib/uri-templates'
 
 const fancyEditor = true
@@ -88,7 +88,7 @@ class ActionForm extends Component {
     if (templatedUrl) url = this.state.url
     const title = 'Issue Request'
     const submitTitle = method.toUpperCase()
-    const submitLevel = deco.methodNameToBootstrapeLevel(method)
+    const submitLevel = deco.methodNameToBootstrapLevel(method)
 
     // TODO: contain modal in browser, but open in middle of viewport…
     modalContainer = undefined
