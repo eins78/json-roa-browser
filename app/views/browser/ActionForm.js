@@ -39,13 +39,8 @@ class ActionForm extends Component {
       }
     }
 
-    this.getFormValue = this.getFormValue.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.onClose = this.onClose.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-
-    // ;['getFormValue', 'handleChange', 'onClose', 'onSubmit']
-    //   .forEach((m) => this[m] = this[m].bind(this))
+    ;['getFormValue', 'handleChange', 'onClose', 'onSubmit']
+      .forEach((method) => { this[method] = this[method].bind(this) })
   }
 
   // NOTE: This could also be done using ReactLink: <http://facebook.github.io/react/docs/two-way-binding-helpers.html>
@@ -58,8 +53,9 @@ class ActionForm extends Component {
     // NOTE: `getValue` comes either from react-bootstrap's <input>
     //       OR the codemirror wrapper (which mirrors the method)
     // TODO: just use the input value directly (if needed at all!)
-    const getVal = (name) => {
-      const getter = f.presence(f.get(this, ['refs', name, 'getValue']))
+    const refs = this.refs
+    function getVal (name) {
+      const getter = f.presence(f.get(refs, [name, 'getValue']))
       return f.isFunction(getter) ? getter() : null
     }
     const changed = {
@@ -154,7 +150,7 @@ class ActionForm extends Component {
               placeholder='JSON DATA'
               help='Must be valid JSON data.'
               type='textarea'
-              rows={'body'.split('\n').length}
+              rows={body.split('\n').length}
               value={body}
               onChange={this.handleChange} />
           })()}
